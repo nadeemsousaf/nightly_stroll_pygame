@@ -10,7 +10,7 @@ class Player():
         self.y_dir = 0
         self.speed = 10
         self.health = 200
-    def vanquish(self):
+    def draw(self):
         print("placeholder")
 
 class NPC():
@@ -22,22 +22,39 @@ class NPC():
         self.dialogue_list = dialogue_list
         self.movements_list = movements_list
         self.health = 100
-    def attack(self):
+    def draw(self):
         print("placeholder")
-    def vanquish(self):
+    def motion(self): #speak and/or move during user interaction
         print("placeholder")
 
+class TextBubble():
+    def __init__(self,text,x,y,font,fg,bg):
+        self.text = text
+        self.x = x
+        self.y = y
+        self.font = font
+        self.fg = fg
+        self.bg = bg
+    def draw(self):
+        print("placeholder")
+
+class Node():
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+    def set_next(self,next):
+        self.next = next
+
 class State():
-    def __init__(self,number,bg,mg,fg):
+    def __init__(self,number,bg,mg,fg,exit_x,current):
         self.number = number
         self.bg = bg
         self.mg = mg
         self.fg = fg
-
-class TextBubble():
-    def __init__(self):
-        print("ok")
-
-class StateText():
-    def __init__(self):
-        print("ok")
+        self.exit_x = exit_x
+        self.current = current #current event inside State, is a Node
+        self.exit = False
+    def draw(self):
+        print("placeholder")
+    def open_exit(self):
+        self.exit = True

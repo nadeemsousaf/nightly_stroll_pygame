@@ -1,6 +1,8 @@
 import pygame
 from sys import exit
 from obj_class import *
+from state import *
+from npc import *
 
 pygame.init()
 window = pygame.display.set_mode((800,500))
@@ -8,9 +10,6 @@ pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
 game_state = 0 #keeps track of game location
-background = 0
-middleground = 0
-foreground = 0
 player = Player(0,0,0,0)
 
 while True:
