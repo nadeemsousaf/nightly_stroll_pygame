@@ -10,7 +10,7 @@ pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
 game_state = 0 #keeps track of game location
-player = Player(0,0,0,0)
+player = Player(0,0,0)
 
 while True:
     if game_state == 0:
@@ -43,5 +43,6 @@ while True:
             elif event.key == pygame.K_RIGHT:
                 player.x_dir = 0
 
+    window.blit(npc1.normal_img, (npc1.x,npc1.y)) #test works, image appears
     pygame.display.update()
     clock.tick(40)

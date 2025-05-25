@@ -13,14 +13,18 @@ class Player():
     def draw(self):
         print("placeholder")
 
+class Action():
+    def __init__(self,dialogue,movement):
+        self.dialogue = dialogue
+        self.movement = movement
+
 class NPC():
-    def __init__(self, x, y, normal_img, dialogue_list, movements_list):
+    def __init__(self, x, y, normal_img, actions):
         self.x = x
         self.y = y
         self.show = normal_img
         self.normal_img = normal_img
-        self.dialogue_list = dialogue_list
-        self.movements_list = movements_list
+        self.actions = actions #singly-linked list of action(s)
         self.health = 100
     def draw(self):
         print("placeholder")
@@ -52,7 +56,7 @@ class State():
         self.mg = mg
         self.fg = fg
         self.exit_x = exit_x
-        self.current = current #current event inside State, is a Node
+        self.current = current #singly-linked list of events
         self.exit = False
     def draw(self):
         print("placeholder")
