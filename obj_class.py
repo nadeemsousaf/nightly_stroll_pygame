@@ -42,12 +42,25 @@ class TextBubble():
     def draw(self):
         print("placeholder")
 
-class Node():
+class NodeL(): #for singly-linked list (events by scene & npc actions)
     def __init__(self,data):
         self.data = data
         self.next = None
     def set_next(self,next):
         self.next = next
+
+class NodeT(): #for tree with no built-in reversal (storyline/map)
+    def __init__(self,data):
+        self.data = data
+        self.l = None
+        self.r = None
+        self.f = None
+    def set_left(self,l):
+        self.l = l
+    def set_right(self,r):
+        self.r = r
+    def set_forward(self,f):
+        self.f = f
 
 class State():
     def __init__(self,number,bg,mg,fg,exit_x,current):
