@@ -1,5 +1,6 @@
 #npc objects
-import pygame
 from obj_class import *
-test = pygame.image.load('game_images/test.png')
+from dialogue import *
+from img_loader import *
+
 npc1 = NPC(0,0,test,0)

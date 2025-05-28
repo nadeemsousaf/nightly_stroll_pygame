@@ -1,6 +1,4 @@
-import pygame
 from sys import exit
-from obj_class import *
 from state import *
 from npc import *
 from tree import *
