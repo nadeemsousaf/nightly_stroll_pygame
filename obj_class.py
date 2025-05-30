@@ -33,8 +33,8 @@ class Player(CustSprite):
 
 class Motion(): #if npc moves and/or speaks
     def __init__(self,dialogue,movement):
-        self.dialogue = dialogue
-        self.movement = movement
+        self.dialogue = dialogue #list
+        self.movement = movement #list
 
 class NPC(CustSprite):
     def __init__(self,x,y,front_img,left_img,right_img,events):

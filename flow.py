@@ -23,7 +23,7 @@ else:
     file = open(mem_file, "x")
     file.close()
 
-player = Player(test,test,test)
+player = Player(test,test,test) #temporary
 
 while True:
     if global_dict["game_state"] == 0:
