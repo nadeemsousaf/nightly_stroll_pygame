@@ -2,7 +2,7 @@ import pygame
 
 #need to determine ownership of each event: when NPC moves in a scene, do these moves belong to the NPC or the State object?
 
-class CustSprite():
+class CustSprite(): #add draw function?
     def __init__(self,x,y,normal_img):
         self.rect = pygame.Rect(x,y,x+normal_img.get_width(),y+normal_img.get_height()) #height goes positive downward...?, width & height catered to normal state
         self.normal_img = normal_img
@@ -51,10 +51,9 @@ class NPC(CustSprite):
         print("placeholder")
 
 class TextBubble(CustSprite): #unsure if will require images
-    def __init__(self,text,x,y,font,normal_img):
+    def __init__(self,text,x,y,font,normal_img,colour):
         super().__init__(x,y,normal_img)
-        self.text = text
-        self.font = font
+        self.txt_obj = font.render(text,False,colour) #text object to go over text bubble
     def draw(self):
         print("placeholder")
 
