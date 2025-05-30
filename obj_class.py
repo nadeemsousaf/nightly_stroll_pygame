@@ -2,8 +2,10 @@ import pygame
 
 #need to determine ownership of each event: when NPC moves in a scene, do these moves belong to the NPC or the State object?
 
-class CustSprite(): #add draw function?
+class CustSprite(): #add draw function? window doesn't exist yet...
     def __init__(self,x,y,normal_img):
+        self.x = x
+        self.y = y
         self.rect = pygame.Rect(x,y,x+normal_img.get_width(),y+normal_img.get_height()) #height goes positive downward...?, width & height catered to normal state
         self.normal_img = normal_img
         self.show_img = normal_img
@@ -15,6 +17,8 @@ class CustSprite(): #add draw function?
         return self.rect.bottomleft
     def get_bottom_right(self):
         return self.rect.bottomright
+    def draw(self,game_window):
+        game_window.blit(self.normal_img,(self.x,self.y))
 
 class Player(CustSprite):
     def __init__(self,front_img,left_img,right_img):
@@ -26,8 +30,6 @@ class Player(CustSprite):
         self.y_dir = 0
         self.speed = 10
         self.health = 200
-    def draw(self):
-        print("placeholder")
 
 class Motion(): #if npc moves and/or speaks
     def __init__(self,dialogue,movement):
@@ -45,29 +47,26 @@ class NPC(CustSprite):
         self.events = events #singly-linked list of action(s)
         self.health = 100 #maybe necessary
         self.trigger = False #to trigger a motion
-    def draw(self):
-        print("placeholder")
     def motion(self): #speak and/or move during user interaction
         print("placeholder")
 
 class TextBubble(CustSprite): #unsure if will require images
-    def __init__(self,text,x,y,font,normal_img,colour):
+    def __init__(self,text,x,y,txt_x,txt_y,font,normal_img,colour):
         super().__init__(x,y,normal_img)
         self.txt_obj = font.render(text,False,colour) #text object to go over text bubble
-    def draw(self):
-        print("placeholder")
+        self.txt_x = txt_x
+        self.txt_y = txt_y
+    def draw(self,game_window):
+        super().draw(self,game_window)
+        game_window.blit(self.txt_obj, (self.txt_x,self.txt_y))
 
-class Button(CustSprite):
-    def __init__(self,text,x,y,font,normal_img,hover_img,click_img):
-        super().__init__(x,y,normal_img)
-        self.text = text
-        self.font = font
+class Button(TextBubble):
+    def __init__(self,text,x,y,txt_x,txt_y,font,normal_img,colour,hover_img,click_img):
+        super().__init__(text,x,y,txt_x,txt_y,font,normal_img,colour)
         self.click_img = click_img
         self.hover_img = hover_img
-        self.hover = False
         self.click = False
-    def draw(self):
-        print("placeholder")
+        self.hover = False
     def hover(self):
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos):
