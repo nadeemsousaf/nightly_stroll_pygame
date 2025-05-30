@@ -1,4 +1,6 @@
 from sys import exit
+from pathlib import Path
+import json
 from state import *
 from npc import *
 from tree import *
@@ -8,18 +10,33 @@ window = pygame.display.set_mode((800,500))
 pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
-game_state = 0 #keeps track of game location, state object
-player = Player(0,0,0)
+#check if memory file exists in current directory
+#if exists, set globals- must parse
+#if not, create file and write default globals to file + set defaults in flow.py scope
+global_dict = {"game_state":1, "item":"broad sword", "city":"New York"} #default global values, test values rn
+mem_file = Path("NightlyStrollMem.txt")
+if mem_file.exists():
+    file = open(mem_file, "r")
+    global_dict = json.loads(file.read())
+    file.close()
+else:
+    file = open(mem_file, "x")
+    file.close()
+
+player = Player(test,test,test)
 
 while True:
-    if game_state == 0:
+    if global_dict["game_state"] == 0:
         print("do this")
-    elif game_state == 1:
+    elif global_dict["game_state"] == 1:
         print("do that")
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            exit()
+            file = open("NightlyStrollMem.txt", "w") #open memory file
+            json.dump(global_dict, file) #write updated json of globals
+            file.close() #close memory file
+            exit() 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
                 player.y_dir = 1
@@ -45,6 +62,5 @@ while True:
     #window.blit(state.bg, (0,0))
     #window.blit(state.fg, (0,70))
     #add objects in the state, probably held in a list
-    window.blit(npc1.normal_img, (npc1.x,npc1.y)) #test works, image appears
     pygame.display.update()
     clock.tick(40)

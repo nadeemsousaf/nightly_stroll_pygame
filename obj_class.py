@@ -2,7 +2,7 @@ import pygame
 
 #need to determine ownership of each event: when NPC moves in a scene, do these moves belong to the NPC or the State object?
 
-class CustSprite(): #add draw function? window doesn't exist yet...
+class CustSprite():
     def __init__(self,x,y,normal_img):
         self.x = x
         self.y = y
