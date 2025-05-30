@@ -111,7 +111,9 @@ class State(): #requires list of objects to render on scene? (on top of fg,mg,bg
         self.exit_x = exit_x
         self.current = current #singly-linked list of events
         self.exit = False
-    def draw(self):
-        print("placeholder")
+    def draw(self,game_window):
+        game_window.blit(self.bg,(self.x,self.y)) #update custom x & y
+        game_window.blit(self.mg,(self.x,self.y)) #update custom x & y
+        game_window.blit(self.fg,(self.x,self.y)) #update custom x & y
     def open_exit(self):
-        self.exit = True
+        self.exit = True #triggers an event, moves to next scene, more code to come

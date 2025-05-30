@@ -25,8 +25,8 @@ else:
 
 player = Player(test,test,test) #temporary
 
-while True:
-    if global_dict["game_state"] == 0:
+while True: #game loop
+    if global_dict["game_state"] == 0: #state handling (what "scene" are we currently at?)
         print("do this")
     elif global_dict["game_state"] == 1:
         print("do that")
@@ -36,8 +36,8 @@ while True:
             file = open("NightlyStrollMem.txt", "w") #open memory file
             json.dump(global_dict, file) #write updated json of globals
             file.close() #close memory file
-            exit() 
-        if event.type == pygame.KEYDOWN:
+            exit() #exit program
+        if event.type == pygame.KEYDOWN: #basic movements for player, doesn't cover buttons
             if event.key == pygame.K_DOWN:
                 player.y_dir = 1
                 player.show = player.front
@@ -59,8 +59,8 @@ while True:
             elif event.key == pygame.K_RIGHT:
                 player.x_dir = 0
 
-    #window.blit(state.bg, (0,0))
+    #window.blit(state.bg, (0,0)) #drawing scene, move to State class draw() function and call game_state.draw()- maybe change data stored in global_dict to be State OBJECT (not int)
     #window.blit(state.fg, (0,70))
-    #add objects in the state, probably held in a list
+    #add objects in the state (objects that are in the scene), probably held in a list
     pygame.display.update()
     clock.tick(40)
