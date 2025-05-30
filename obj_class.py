@@ -1,5 +1,7 @@
 import pygame
 
+#need to determine ownership of each event: when NPC moves in a scene, do these moves belong to the NPC or the State object?
+
 class CustSprite():
     def __init__(self,x,y,normal_img):
         self.rect = pygame.Rect(x,y,x+normal_img.get_width(),y+normal_img.get_height()) #height goes positive downward...?, width & height catered to normal state
@@ -15,7 +17,7 @@ class CustSprite():
         return self.rect.bottomright
 
 class Player(CustSprite):
-    def __init__(self, front_img, left_img, right_img):
+    def __init__(self,front_img,left_img,right_img):
         super().__init__(0,245,front_img)
         self.front_img = front_img
         self.left_img = left_img
@@ -27,21 +29,22 @@ class Player(CustSprite):
     def draw(self):
         print("placeholder")
 
-class Action(): #if npc moves and/or speaks
+class Motion(): #if npc moves and/or speaks
     def __init__(self,dialogue,movement):
         self.dialogue = dialogue
         self.movement = movement
 
 class NPC(CustSprite):
-    def __init__(self,x,y,front_img,left_img,right_img,actions):
+    def __init__(self,x,y,front_img,left_img,right_img,events):
         super().__init__(x,y,front_img)
         self.x = x
         self.y = y
         self.front_img = front_img
         self.left_img = left_img
         self.right_img = right_img
-        self.actions = actions #singly-linked list of action(s)
+        self.events = events #singly-linked list of action(s)
         self.health = 100 #maybe necessary
+        self.trigger = False #to trigger a motion
     def draw(self):
         print("placeholder")
     def motion(self): #speak and/or move during user interaction
@@ -55,7 +58,7 @@ class TextBubble(CustSprite): #unsure if will require images
     def draw(self):
         print("placeholder")
 
-class Button(CustSprite): #likely will require images, needs hover and click detection
+class Button(CustSprite):
     def __init__(self,text,x,y,font,normal_img,hover_img,click_img):
         super().__init__(x,y,normal_img)
         self.text = text
