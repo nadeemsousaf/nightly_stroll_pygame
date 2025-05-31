@@ -44,7 +44,8 @@ class NPC(CustSprite):
         self.front_img = front_img
         self.left_img = left_img
         self.right_img = right_img
-        self.events = events #singly-linked list of action(s)
+        self.events = events #singly-linked list of action(s) or npc states
+        #self.current = events.data
         self.health = 100 #maybe necessary
         self.trigger = False #to trigger a motion
     def motion(self): #speak and/or move during user interaction
@@ -61,12 +62,13 @@ class TextBubble(CustSprite): #unsure if will require images
         game_window.blit(self.txt_obj, (self.txt_x,self.txt_y))
 
 class Button(TextBubble):
-    def __init__(self,text,x,y,txt_x,txt_y,font,normal_img,colour,hover_img,click_img):
+    def __init__(self,text,x,y,txt_x,txt_y,font,normal_img,colour,hover_img,click_img,click_func):
         super().__init__(text,x,y,txt_x,txt_y,font,normal_img,colour)
         self.click_img = click_img
         self.hover_img = hover_img
-        self.click = False
+        self.click = False #not sure if necessary
         self.hover = False
+        self.click_func = click_func
     def hover(self):
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos):
@@ -80,9 +82,10 @@ class Button(TextBubble):
             if event.type ==pygame.MOUSEBUTTONDOWN:
                 if self.hover == True:
                     self.show_img = self.click_img
-                    self.click = True #triggers an event, more code to come
+                    self.click_func(self) #calls passed in function, passes object to get all info in case function needs- consider
+                    #self.click = True #triggers an event, more code to come
 
-class NodeL(): #for singly-linked list (events by scene & npc actions)
+class NodeL(): #for singly-linked list (events by scene & npc actions)- needed?
     def __init__(self,data):
         self.data = data
         self.next = None
@@ -102,14 +105,15 @@ class NodeT(): #for tree with no built-in reversal (storyline/map)
     def set_forward(self,f):
         self.f = f
 
-class State(): #requires list of objects to render on scene? (on top of fg,mg,bg images)- sprite? no...
-    def __init__(self,number,bg,mg,fg,exit_x,current):
+class State(): #sub-classes for walking vs talking?
+    def __init__(self,number,bg,mg,fg,exit_x,events):
         self.number = number
         self.bg = bg
         self.mg = mg
         self.fg = fg
         self.exit_x = exit_x
-        self.current = current #singly-linked list of events
+        self.events = events
+        #self.current = events.data
         self.exit = False
     def draw(self,game_window):
         game_window.blit(self.bg,(self.x,self.y)) #update custom x & y

@@ -25,6 +25,16 @@ else:
 
 player = Player(test,test,test) #temporary
 
+'''
+while running:
+    keys = pygame.key.get_pressed()  # Checking pressed keys
+    if keys[pygame.K_UP]:
+        y1 -= 1
+    if keys[pygame.K_DOWN]:
+        y1 += 1
+'''
+
+
 while True: #game loop
     if global_dict["game_state"] == 0: #state handling (what "scene" are we currently at?)
         print("do this")
