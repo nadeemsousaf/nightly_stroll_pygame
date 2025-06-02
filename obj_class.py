@@ -106,18 +106,51 @@ class NodeT(): #for tree with no built-in reversal (storyline/map)
         self.f = f
 
 class State(): #sub-classes for walking vs talking?
-    def __init__(self,number,bg,mg,fg,exit_x,events):
+    def __init__(self,number,bg,mg,fg,events,sprites,current):
         self.number = number
         self.bg = bg
         self.mg = mg
         self.fg = fg
-        self.exit_x = exit_x
         self.events = events
-        #self.current = events.data
+        self.sprites = sprites
+        self.current = current #current state of scene
         self.exit = False
     def draw(self,game_window):
         game_window.blit(self.bg,(self.x,self.y)) #update custom x & y
         game_window.blit(self.mg,(self.x,self.y)) #update custom x & y
         game_window.blit(self.fg,(self.x,self.y)) #update custom x & y
+        for sprite in self.sprites:
+            sprite.draw()
     def open_exit(self):
         self.exit = True #triggers an event, moves to next scene, more code to come
+
+class StateWalk(State):
+    def __init__(self,number,bg,mg,fg,events,sprites):
+        super().__init__(self,number,bg,mg,fg,events,sprites)
+    def walk(self,player):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    player.y_dir = 1
+                    player.show = player.front
+                elif event.key == pygame.K_UP:
+                    player.y_dir = -1
+                elif event.key == pygame.K_LEFT:
+                    player.x_dir = -1
+                    player.show = player.left
+                elif event.key == pygame.K_RIGHT:
+                    player.x_dir = 1
+                    player.show = player.right
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_DOWN:
+                    player.y_dir = 0
+                elif event.key == pygame.K_UP:
+                    player.y_dir = 0
+                elif event.key == pygame.K_LEFT:
+                    player.x_dir = 0
+                elif event.key == pygame.K_RIGHT:
+                    player.x_dir = 0
+
+class StateTalk(State):
+    def __init__(self,number,bg,mg,fg,events,sprites):
+        super().__init__(self,number,bg,mg,fg,events,sprites)

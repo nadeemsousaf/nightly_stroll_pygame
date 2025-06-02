@@ -47,30 +47,7 @@ while True: #game loop
             json.dump(global_dict, file) #write updated json of globals
             file.close() #close memory file
             exit() #exit program
-        if event.type == pygame.KEYDOWN: #basic movements for player, doesn't cover buttons
-            if event.key == pygame.K_DOWN:
-                player.y_dir = 1
-                player.show = player.front
-            elif event.key == pygame.K_UP:
-                player.y_dir = -1
-            elif event.key == pygame.K_LEFT:
-                player.x_dir = -1
-                player.show = player.left
-            elif event.key == pygame.K_RIGHT:
-                player.x_dir = 1
-                player.show = player.right
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_DOWN:
-                player.y_dir = 0
-            elif event.key == pygame.K_UP:
-                player.y_dir = 0
-            elif event.key == pygame.K_LEFT:
-                player.x_dir = 0
-            elif event.key == pygame.K_RIGHT:
-                player.x_dir = 0
 
-    #window.blit(state.bg, (0,0)) #drawing scene, move to State class draw() function and call game_state.draw()- maybe change data stored in global_dict to be State OBJECT (not int)
-    #window.blit(state.fg, (0,70))
-    #add objects in the state (objects that are in the scene), probably held in a list
+    #state.draw()
     pygame.display.update()
     clock.tick(40)
