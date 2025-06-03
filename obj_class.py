@@ -1,7 +1,5 @@
 import pygame
 
-#need to determine ownership of each event: when NPC moves in a scene, do these moves belong to the NPC or the State object?
-
 class CustSprite():
     def __init__(self,x,y,normal_img):
         self.x = x
@@ -31,18 +29,13 @@ class Player(CustSprite):
         self.speed = 10
         self.health = 200
 
-class Motion(): #if npc moves and/or speaks
-    def __init__(self,dialogue,movement):
-        self.dialogue = dialogue #list
-        self.movement = movement #list
-
 class NPC(CustSprite):
     def __init__(self,x,y,front_img,left_img,right_img):
         super().__init__(x,y,front_img)
         self.front_img = front_img
         self.left_img = left_img
         self.right_img = right_img
-    def motion(self): #speak and/or move during user interaction- handled by state or npc?
+    def motion(self):
         print("placeholder")
 
 class TextBubble(CustSprite): #separate text from text box? Or one image?
