@@ -37,18 +37,12 @@ class Motion(): #if npc moves and/or speaks
         self.movement = movement #list
 
 class NPC(CustSprite):
-    def __init__(self,x,y,front_img,left_img,right_img,events):
+    def __init__(self,x,y,front_img,left_img,right_img):
         super().__init__(x,y,front_img)
-        self.x = x
-        self.y = y
         self.front_img = front_img
         self.left_img = left_img
         self.right_img = right_img
-        self.events = events #singly-linked list of action(s) or npc states
-        #self.current = events.data
-        self.health = 100 #maybe necessary
-        self.trigger = False #to trigger a motion
-    def motion(self): #speak and/or move during user interaction
+    def motion(self): #speak and/or move during user interaction- handled by state or npc?
         print("placeholder")
 
 class TextBubble(CustSprite): #separate text from text box? Or one image?
@@ -86,7 +80,7 @@ class Button(TextBubble):
 
 class NodeT(): #for tree with no built-in reversal (storyline/map)
     def __init__(self,data):
-        self.data = data
+        self.data = data #StateWalk or StateTalk
         self.l = None
         self.r = None
         self.f = None
@@ -113,7 +107,7 @@ class State(): #sub-classes for walking vs talking?
         game_window.blit(self.fg,(self.x,self.y)) #update custom x & y
         for sprite in self.sprites:
             sprite.draw(game_window)
-    def open_exit(self):
+    def open_exit(self): #change to accomodate for direction
         self.exit = True #triggers an event, moves to next scene, more code to come
 
 class StateWalk(State):
@@ -145,4 +139,4 @@ class StateWalk(State):
 
 class StateTalk(State):
     def __init__(self,number,bg,mg,fg,events,sprites):
-        super().__init__(self,number,bg,mg,fg,events,sprites)
+        super().__init__(self,number,bg,mg,fg,events,sprites) 
