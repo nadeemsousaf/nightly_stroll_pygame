@@ -48,6 +48,6 @@ while True: #game loop
             file.close() #close memory file
             exit() #exit program
 
-    #state.draw()
+    #state.draw(game_window)
     pygame.display.update()
     clock.tick(40)
