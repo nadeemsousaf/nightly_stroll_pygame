@@ -2,3 +2,7 @@
 #isometric?
 import pygame
 test = pygame.image.load('game_images/test.png')
+button1 = pygame.image.load('game_images/button1test.jpg')
+button2 = pygame.image.load('game_images/button1test.jpg')
+button3 = pygame.image.load('game_images/button1test.jpg')
+great_wave = pygame.image.load('game_images/great_wave.jpg')

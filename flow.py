@@ -10,10 +10,8 @@ window = pygame.display.set_mode((800,500))
 pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
-#check if memory file exists in current directory
-#if exists, set globals- must parse
-#if not, create file and write default globals to file + set defaults in flow.py scope
 global_dict = {"game_state":1, "item":"broad sword", "city":"New York"} #default global values, test values rn
+state_dict = {1:state1}
 mem_file = Path("NightlyStrollMem.txt")
 if mem_file.exists():
     file = open(mem_file, "r")
@@ -36,10 +34,6 @@ while running:
 
 
 while True: #game loop
-    if global_dict["game_state"] == 0: #state handling (what "scene" are we currently at?)
-        print("do this")
-    elif global_dict["game_state"] == 1:
-        print("do that")
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -47,7 +41,7 @@ while True: #game loop
             json.dump(global_dict, file) #write updated json of globals
             file.close() #close memory file
             exit() #exit program
-
-    #state.draw(game_window)
+    
+    state_dict[global_dict["game_state"]].draw(window)
     pygame.display.update()
     clock.tick(40)

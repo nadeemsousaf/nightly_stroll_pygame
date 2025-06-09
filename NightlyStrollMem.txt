@@ -1,1 +1,1 @@
-{"game_state": 0, "item": "broad sword", "city": "New York"}
+{"game_state": 1, "item": "broad sword", "city": "New York"}

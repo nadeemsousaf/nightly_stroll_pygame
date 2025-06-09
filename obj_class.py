@@ -45,12 +45,12 @@ class TextBubble(CustSprite): #separate text from text box? Or one image?
         self.txt_x = txt_x
         self.txt_y = txt_y
     def draw(self,game_window):
-        super().draw(self,game_window)
+        super().draw(game_window)
         game_window.blit(self.txt_obj, (self.txt_x,self.txt_y))
 
-class Button(TextBubble):
-    def __init__(self,text,x,y,txt_x,txt_y,font,normal_img,colour,hover_img,click_img,direction):
-        super().__init__(text,x,y,txt_x,txt_y,font,normal_img,colour)
+class Button(CustSprite):
+    def __init__(self,x,y,normal_img,hover_img,click_img,direction):
+        super().__init__(x,y,normal_img)
         self.click_img = click_img
         self.hover_img = hover_img
         self.click = False #not sure if necessary
@@ -70,6 +70,8 @@ class Button(TextBubble):
                 if self.hover == True:
                     self.show_img = self.click_img #sleep to show clicked button?
                     return self.direction
+    def draw(self,game_window):
+        super().draw(game_window)
 
 class NodeT(): #for tree with no built-in reversal (storyline/map)
     def __init__(self,data):
@@ -92,14 +94,15 @@ class State(): #sub-classes for walking vs talking?
         self.fg = fg
         self.events = events
         self.sprites = sprites
-        self.state = events.data #singly-linked list...?
+        #self.state = events.data #singly-linked list...?
         self.exit = False
     def draw(self,game_window):
-        game_window.blit(self.bg,(self.x,self.y)) #update custom x & y
-        game_window.blit(self.mg,(self.x,self.y)) #update custom x & y
-        game_window.blit(self.fg,(self.x,self.y)) #update custom x & y
-        for sprite in self.sprites:
-            sprite.draw(game_window)
+        game_window.blit(self.bg,(0,0)) #update custom x & y
+        game_window.blit(self.mg,(0,0)) #update custom x & y
+        game_window.blit(self.fg,(0,0)) #update custom x & y
+        for x in self.sprites:
+            x.draw(game_window)
+        
     def open_exit(self): #change to accomodate for direction
         self.exit = True #triggers an event, moves to next scene, more code to come
 
@@ -133,3 +136,4 @@ class StateWalk(State):
 class StateTalk(State):
     def __init__(self,number,bg,mg,fg,events,sprites):
         super().__init__(self,number,bg,mg,fg,events,sprites) 
+
