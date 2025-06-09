@@ -11,7 +11,6 @@ pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
 global_dict = {"game_state":1, "item":"broad sword", "city":"New York"} #default global values, test values rn
-state_dict = {1:state1}
 mem_file = Path("NightlyStrollMem.txt")
 if mem_file.exists():
     file = open(mem_file, "r")
@@ -42,6 +41,7 @@ while True: #game loop
             file.close() #close memory file
             exit() #exit program
     
+    state_dict[global_dict["game_state"]].update()
     state_dict[global_dict["game_state"]].draw(window)
     pygame.display.update()
     clock.tick(40)

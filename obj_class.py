@@ -16,7 +16,9 @@ class CustSprite():
     def get_bottom_right(self):
         return self.rect.bottomright
     def draw(self,game_window):
-        game_window.blit(self.normal_img,(self.x,self.y))
+        game_window.blit(self.show_img,(self.x,self.y))
+    def update(self):
+        placeholder = "placeholder"
 
 class Player(CustSprite):
     def __init__(self,front_img,left_img,right_img):
@@ -53,25 +55,20 @@ class Button(CustSprite):
         super().__init__(x,y,normal_img)
         self.click_img = click_img
         self.hover_img = hover_img
-        self.click = False #not sure if necessary
-        self.hover = False
         self.direction = direction #"L", "F" or "R"
-    def hover(self):
-        mouse_pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos):
-            self.hover = True
-            self.show_img = self.hover_img
-        else: #check if else if necessary
-            self.hover = False
-            self.show_img = self.normal_img
-    def click(self):
-         for event in pygame.event.get():
-            if event.type ==pygame.MOUSEBUTTONDOWN:
-                if self.hover == True:
-                    self.show_img = self.click_img #sleep to show clicked button?
-                    return self.direction
     def draw(self,game_window):
         super().draw(game_window)
+    def update(self):
+        mouse_pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(mouse_pos):
+            self.show_img = self.hover_img
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.show_img = self.click_img #sleep to show clicked button?
+                    print("click")
+                    #return self.direction
+        else:
+           self.show_img = self.normal_img 
 
 class NodeT(): #for tree with no built-in reversal (storyline/map)
     def __init__(self,data):
@@ -102,7 +99,9 @@ class State(): #sub-classes for walking vs talking?
         game_window.blit(self.fg,(0,0)) #update custom x & y
         for x in self.sprites:
             x.draw(game_window)
-        
+    def update(self):
+        for x in self.sprites:
+            x.update()
     def open_exit(self): #change to accomodate for direction
         self.exit = True #triggers an event, moves to next scene, more code to come
 
