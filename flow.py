@@ -6,7 +6,7 @@ from npc import *
 from tree import *
 
 pygame.init()
-window = pygame.display.set_mode((800,500))
+window = pygame.display.set_mode((800,500), pygame.RESIZABLE)
 pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
@@ -31,7 +31,6 @@ while running:
         y1 += 1
 '''
 
-
 while True: #game loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -41,7 +40,7 @@ while True: #game loop
             file.close() #close memory file
             exit() #exit program
     
-    state_dict[global_dict["game_state"]].update()
+    state_dict[global_dict["game_state"]].update(event)
     state_dict[global_dict["game_state"]].draw(window)
     pygame.display.update()
     clock.tick(40)

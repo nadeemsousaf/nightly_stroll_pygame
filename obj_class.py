@@ -17,7 +17,7 @@ class CustSprite():
         return self.rect.bottomright
     def draw(self,game_window):
         game_window.blit(self.show_img,(self.x,self.y))
-    def update(self):
+    def update(self,event):
         placeholder = "placeholder"
 
 class Player(CustSprite):
@@ -58,15 +58,14 @@ class Button(CustSprite):
         self.direction = direction #"L", "F" or "R"
     def draw(self,game_window):
         super().draw(game_window)
-    def update(self):
+    def update(self,event):
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos):
             self.show_img = self.hover_img
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.show_img = self.click_img #sleep to show clicked button?
-                    print("click")
-                    #return self.direction
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                self.show_img = self.click_img #sleep to show clicked button?
+                print("click")
+                #return self.direction
         else:
            self.show_img = self.normal_img 
 
@@ -99,9 +98,9 @@ class State(): #sub-classes for walking vs talking?
         game_window.blit(self.fg,(0,0)) #update custom x & y
         for x in self.sprites:
             x.draw(game_window)
-    def update(self):
+    def update(self,event):
         for x in self.sprites:
-            x.update()
+            x.update(event)
     def open_exit(self): #change to accomodate for direction
         self.exit = True #triggers an event, moves to next scene, more code to come
 
