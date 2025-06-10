@@ -51,7 +51,7 @@ class TextBubble(CustSprite): #separate text from text box? Or one image?
         game_window.blit(self.txt_obj, (self.txt_x,self.txt_y))
 
 class Button(CustSprite):
-    def __init__(self,x,y,normal_img,hover_img,click_img,direction):
+    def __init__(self,x,y,normal_img,hover_img,click_img,direction): #only need 2 images for button
         super().__init__(x,y,normal_img)
         self.click_img = click_img
         self.hover_img = hover_img
@@ -130,6 +130,9 @@ class StateWalk(State):
                     player.x_dir = 0
                 elif event.key == pygame.K_RIGHT:
                     player.x_dir = 0
+    def update(self):
+        self.walk()
+        #if player.x is past certain threshold- next state? change image?
 
 class StateTalk(State):
     def __init__(self,number,bg,mg,fg,events,sprites):
