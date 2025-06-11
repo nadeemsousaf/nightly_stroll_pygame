@@ -4,7 +4,7 @@ class CustSprite():
     def __init__(self,x,y,normal_img):
         self.x = x
         self.y = y
-        self.rect = pygame.Rect(x,y,x+normal_img.get_width(),y+normal_img.get_height()) #height goes positive downward...?, width & height catered to normal state
+        self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #height goes positive downward...?, width & height catered to normal state
         self.normal_img = normal_img
         self.show_img = normal_img
     def get_top_left(self):
@@ -51,9 +51,8 @@ class TextBubble(CustSprite): #separate text from text box? Or one image?
         game_window.blit(self.txt_obj, (self.txt_x,self.txt_y))
 
 class Button(CustSprite):
-    def __init__(self,x,y,normal_img,hover_img,click_img,direction): #only need 2 images for button
+    def __init__(self,x,y,normal_img,hover_img,direction): #only need 2 images for button
         super().__init__(x,y,normal_img)
-        self.click_img = click_img
         self.hover_img = hover_img
         self.direction = direction #"L", "F" or "R"
     def draw(self,game_window):
@@ -63,7 +62,7 @@ class Button(CustSprite):
         if self.rect.collidepoint(mouse_pos):
             self.show_img = self.hover_img
             if event.type == pygame.MOUSEBUTTONDOWN:
-                self.show_img = self.click_img #sleep to show clicked button?
+                self.show_img = self.normal_img #sleep to show clicked button?
                 print("click")
                 #return self.direction
         else:

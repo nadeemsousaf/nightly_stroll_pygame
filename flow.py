@@ -10,6 +10,7 @@ window = pygame.display.set_mode((800,500), pygame.RESIZABLE)
 pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
+load_menu = "start menu state" #placeholder
 global_dict = {"game_state":1, "item":"broad sword", "city":"New York"} #default global values, test values rn
 mem_file = Path("NightlyStrollMem.txt")
 if mem_file.exists():
