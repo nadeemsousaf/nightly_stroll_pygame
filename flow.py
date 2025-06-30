@@ -38,7 +38,6 @@ while True: #game loop
         load_state = re
         load_state.update(event)
     load_state.draw(window)
-    #state_dict[global_dict["game_state"]].update(event)
-    #state_dict[global_dict["game_state"]].draw(window)
+   
     pygame.display.update()
     clock.tick(40)
