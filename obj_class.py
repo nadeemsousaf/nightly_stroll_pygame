@@ -51,19 +51,25 @@ class TextBubble(CustSprite): #separate text from text box? Or one image?
         game_window.blit(self.txt_obj, (self.txt_x,self.txt_y))
 
 class Button(CustSprite):
-    def __init__(self,x,y,normal_img,hover_img,direction): #only need 2 images for button
+    def __init__(self,x,y,normal_img,hover_img): #only need 2 images for button
         super().__init__(x,y,normal_img)
         self.hover_img = hover_img
-        self.direction = direction #"L", "F" or "R"
+        self.action = None
+        self.state = None
     def draw(self,game_window):
         super().draw(game_window)
+    def set_click_response(self,state,action):
+        self.state = state
+        self.action = action
     def update(self,event):
         mouse_pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos):
+        if self.rect.collidepoint(mouse_pos): #mouse hovering
             self.show_img = self.hover_img
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN: #button clicked
                 self.show_img = self.normal_img #sleep to show clicked button?
-                print("click")
+                #print("click")
+                if self.state != None:
+                    self.state.update() #load next state
                 #return self.direction
         else:
            self.show_img = self.normal_img 

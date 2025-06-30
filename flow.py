@@ -10,10 +10,11 @@ window = pygame.display.set_mode((800,500), pygame.RESIZABLE)
 pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
-load_menu = "start menu state" #placeholder
+load_menu = menu_state1
 global_dict = {"game_state":1, "item":"broad sword", "city":"New York"} #default global values, test values rn
 mem_file = Path("NightlyStrollMem.txt")
 if mem_file.exists():
+    load_menu = menu_state2
     file = open(mem_file, "r")
     global_dict = json.loads(file.read())
     file.close()
@@ -22,15 +23,6 @@ else:
     file.close()
 
 player = Player(test,test,test) #temporary
-
-'''
-while running:
-    keys = pygame.key.get_pressed()  # Checking pressed keys
-    if keys[pygame.K_UP]:
-        y1 -= 1
-    if keys[pygame.K_DOWN]:
-        y1 += 1
-'''
 
 while True: #game loop
     for event in pygame.event.get():
@@ -41,7 +33,9 @@ while True: #game loop
             file.close() #close memory file
             exit() #exit program
     
-    state_dict[global_dict["game_state"]].update(event)
-    state_dict[global_dict["game_state"]].draw(window)
+    load_menu.update(event)
+    load_menu.draw(window)
+    #state_dict[global_dict["game_state"]].update(event)
+    #state_dict[global_dict["game_state"]].draw(window)
     pygame.display.update()
     clock.tick(40)
