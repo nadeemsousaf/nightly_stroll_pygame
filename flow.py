@@ -10,11 +10,11 @@ window = pygame.display.set_mode((800,500), pygame.RESIZABLE)
 pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
-load_menu = menu_state1
+load_state = menu_state1
 global_dict = {"game_state":1, "item":"broad sword", "city":"New York"} #default global values, test values rn
 mem_file = Path("NightlyStrollMem.txt")
 if mem_file.exists():
-    load_menu = menu_state2
+    load_state = menu_state2
     file = open(mem_file, "r")
     global_dict = json.loads(file.read())
     file.close()
@@ -33,8 +33,11 @@ while True: #game loop
             file.close() #close memory file
             exit() #exit program
     
-    load_menu.update(event)
-    load_menu.draw(window)
+    re = load_state.update(event)
+    if re != None: #changing state
+        load_state = re
+        load_state.update(event)
+    load_state.draw(window)
     #state_dict[global_dict["game_state"]].update(event)
     #state_dict[global_dict["game_state"]].draw(window)
     pygame.display.update()

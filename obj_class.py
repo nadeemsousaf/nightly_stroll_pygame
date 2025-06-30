@@ -1,4 +1,5 @@
 import pygame
+from button_functions import *
 
 class CustSprite():
     def __init__(self,x,y,normal_img):
@@ -69,10 +70,11 @@ class Button(CustSprite):
                 self.show_img = self.normal_img #sleep to show clicked button?
                 #print("click")
                 if self.state != None:
-                    self.state.update() #load next state
-                #return self.direction
+                    #execute action if exists
+                    return self.state
         else:
            self.show_img = self.normal_img 
+           return None
 
 class NodeT(): #for tree with no built-in reversal (storyline/map)
     def __init__(self,data):
