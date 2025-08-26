@@ -59,9 +59,9 @@ class Button(CustSprite):
         self.state = None
     def draw(self,game_window):
         super().draw(game_window)
-    def set_click_response(self,state,action):
-        self.state = state
-        self.action = action
+    def set_click_response(self,action,action_var):
+        self.action = action #a function
+        self.action_var = action_var
     def update(self,event):
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos): #mouse hovering
@@ -69,9 +69,11 @@ class Button(CustSprite):
             if event.type == pygame.MOUSEBUTTONDOWN: #button clicked
                 self.show_img = self.normal_img #sleep to show clicked button?
                 #print("click")
-                if self.state != None:
-                    #execute action if exists
-                    return self.state
+                if self.action != None:
+                    if self.action_var != None:
+                        return self.action(self.action_var) #value needs to be passed in to the function in form of a list
+                    else:
+                        self.action() #no values into function
         else:
            self.show_img = self.normal_img 
            return None

@@ -1,8 +1,8 @@
-from flow import global_dict, mem_file
+rwx_flag = 21 #flag that is raised by button function to state that a change has been made to our txt file, constitutes that a read operation must occur via flow.py
 
-#make specific lambdas to add specific items per button and pass to button class
-def add_to_inventory(name,item):
-    global_dict[name] = item
+#all functions with values passed in will have the values passed in with a list...
+def add_to_inventory(value_list):
+    x = 10
 
 def restart():
     x = 10
@@ -14,4 +14,3 @@ def resume():
 
 def quit():
     x = 10
-    #can we end program from here?
