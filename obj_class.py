@@ -59,9 +59,8 @@ class Button(CustSprite):
         self.state = None
     def draw(self,game_window):
         super().draw(game_window)
-    def set_click_response(self,action,action_var): #remove action_var and replace with lambdas!!!!!!!!!!!!!!!!!!!!
+    def set_click_response(self,action):
         self.action = action #a function
-        self.action_var = action_var
     def update(self,event):
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos): #mouse hovering
@@ -70,10 +69,7 @@ class Button(CustSprite):
                 self.show_img = self.normal_img #sleep to show clicked button?
                 #print("click")
                 if self.action != None:
-                    if self.action_var != None:
-                        return self.action(self.action_var) #value needs to be passed in to the function in form of a list- dict instead?
-                    else:
-                        self.action() #no values into function
+                    self.action() #this is a lambda
         else:
            self.show_img = self.normal_img 
            return None
