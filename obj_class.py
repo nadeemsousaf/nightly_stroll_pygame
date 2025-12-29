@@ -40,18 +40,18 @@ class Player(CustSprite):
         self.pause = False
     
     def set_forward(self):
-        self.normal_img = self.front_img
+        self.show_img = self.front_img
 
     def set_left(self):
-        self.normal_img = self.left_img
+        self.show_img = self.left_img
 
     def set_right(self):
-        self.normal_img = self.right_img
+        self.show_img = self.right_img
     
     def set_x_dir(self,x):
         self.x_dir = x
     
-    def set_x_dir(self,y):
+    def set_y_dir(self,y):
         self.x_dir = y
 
     def walk(self):

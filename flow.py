@@ -37,37 +37,40 @@ def restart_game():
 
 add_item_code = {} #code with function
 
+player = Player(0,0,player1,player1,player1) #placeholder
+
 while True: #game loop
+    if load_state is StateWalk:
+        player = load_state.get_player() #set player for movement
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             shutdown_save()
-        if event.type == pygame.KEYDOWN and load_state is StateWalk:
-            player = load_state.get_player() #set player for movement
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                player.y_dir = 1
-                player.show = player.front
+                player.set_y_dir(1)
+                player.set_forward()
             elif event.key == pygame.K_UP:
-                player.y_dir = -1
+                player.set_y_dir(-1)
             elif event.key == pygame.K_LEFT:
-                player.x_dir = -1
-                player.show = player.left
+                player.set_x_dir(-1)
+                player.set_right()
             elif event.key == pygame.K_RIGHT:
-                player.x_dir = 1
-                player.show = player.right
+                player.set_x_dir(1)
+                player.set_left()
             '''
             elif event.key == pygame.K_SPACE:
                 player.attack()
             '''
-        if event.type == pygame.KEYUP and load_state is StateWalk:
+        if event.type == pygame.KEYUP:
             player = load_state.get_player() #set player for movement
             if event.key == pygame.K_DOWN:
-                player.y_dir = 0
+                player.set_y_dir(0)
             elif event.key == pygame.K_UP:
-                player.y_dir = 0
+                player.set_y_dir(0)
             elif event.key == pygame.K_LEFT:
-                player.x_dir = 0
+                player.set_x_dir(0)
             elif event.key == pygame.K_RIGHT:
-                player.x_dir = 0
+                player.set_x_dir(0)
 
     re = load_state.update(event) #custom handling
     if re != None: #changing state

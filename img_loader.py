@@ -6,6 +6,7 @@ for i in range(len(game_buttons_img)):
     game_buttons_img[i] = pygame.transform.scale(game_buttons_img[i], (100,50))
 
 great_wave = pygame.image.load('game_images/great_wave.jpg')
+are_you_sure = pygame.image.load('game_images/are_you_sure.jpg')
 player1 = pygame.image.load('game_images/player1.png')
 player2 = pygame.image.load('game_images/player2.png')
 player3 = pygame.image.load('game_images/player3.png')
