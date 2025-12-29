@@ -47,10 +47,11 @@ while True: #game loop
             shutdown_save()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                player.set_y_dir(1)
+                #player.set_y_dir(1)
                 player.set_forward()
             elif event.key == pygame.K_UP:
-                player.set_y_dir(-1)
+                #player.set_y_dir(-1)
+                player.set_forward()
             elif event.key == pygame.K_LEFT:
                 player.set_x_dir(-1)
                 player.set_right()
