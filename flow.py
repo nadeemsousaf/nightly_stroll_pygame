@@ -41,7 +41,34 @@ while True: #game loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             shutdown_save()
-    
+        if event.type == pygame.KEYDOWN and load_state is StateWalk:
+            player = load_state.get_player() #set player for movement
+            if event.key == pygame.K_DOWN:
+                player.y_dir = 1
+                player.show = player.front
+            elif event.key == pygame.K_UP:
+                player.y_dir = -1
+            elif event.key == pygame.K_LEFT:
+                player.x_dir = -1
+                player.show = player.left
+            elif event.key == pygame.K_RIGHT:
+                player.x_dir = 1
+                player.show = player.right
+            '''
+            elif event.key == pygame.K_SPACE:
+                player.attack()
+            '''
+        if event.type == pygame.KEYUP and load_state is StateWalk:
+            player = load_state.get_player() #set player for movement
+            if event.key == pygame.K_DOWN:
+                player.y_dir = 0
+            elif event.key == pygame.K_UP:
+                player.y_dir = 0
+            elif event.key == pygame.K_LEFT:
+                player.x_dir = 0
+            elif event.key == pygame.K_RIGHT:
+                player.x_dir = 0
+
     re = load_state.update(event) #custom handling
     if re != None: #changing state
         if re == 'QUIT':
