@@ -1,4 +1,8 @@
-rwx_flag = 21 #flag that is raised by button function to state that a change has been made to our txt file, constitutes that a read operation must occur via flow.py
-
 #full of lambdas
-#
+#restart- import os, delete memory file and restart from flow.py entry point?? how to avoid circular importing??
+#       - keep txt file of default values to read from if restarting
+#       - load in the state2
+
+#resume
+#restart
+#quit

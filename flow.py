@@ -24,19 +24,30 @@ else:
 
 player = Player(test,test,test) #temporary
 
+def shutdown_save():
+    pygame.quit()
+    file = open("NightlyStrollMem.txt", "w") #open memory file
+    json.dump(global_dict, file) #write updated json of globals
+    file.close() #close memory file
+    exit() #exit program
+
+def restart_game():
+    pass
+
 while True: #game loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            file = open("NightlyStrollMem.txt", "w") #open memory file
-            json.dump(global_dict, file) #write updated json of globals
-            file.close() #close memory file
-            exit() #exit program
+            shutdown_save()
     
-    re = load_state.update(event)
+    re = load_state.update(event) #custom handling
     if re != None: #changing state
-        load_state = re
-        load_state.update(event)
+        if re == 'QUIT':
+            shutdown_save()
+        elif re == 'RESTART':
+            restart_game()
+        else: #change game state
+            load_state = re
+            load_state.update(event) 
     load_state.draw(window)
    
     pygame.display.update()

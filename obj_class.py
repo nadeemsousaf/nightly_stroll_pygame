@@ -18,8 +18,8 @@ class CustSprite():
         return self.rect.bottomright
     def draw(self,game_window):
         game_window.blit(self.show_img,(self.x,self.y))
-    def update(self,event):
-        placeholder = "placeholder"
+    def update(self):
+        pass
 
 class Player(CustSprite):
     def __init__(self,front_img,left_img,right_img):
@@ -39,7 +39,7 @@ class NPC(CustSprite):
         self.left_img = left_img
         self.right_img = right_img
     def motion(self):
-        print("placeholder")
+        pass
 
 class TextBubble(CustSprite): #separate text from text box? Or one image?
     def __init__(self,text,x,y,txt_x,txt_y,font,normal_img,colour):
@@ -52,24 +52,23 @@ class TextBubble(CustSprite): #separate text from text box? Or one image?
         game_window.blit(self.txt_obj, (self.txt_x,self.txt_y))
 
 class Button(CustSprite):
-    def __init__(self,x,y,normal_img,hover_img): #only need 2 images for button
+    def __init__(self,x,y,normal_img,hover_img,action=None): #only need 2 images for button
         super().__init__(x,y,normal_img)
         self.hover_img = hover_img
-        self.action = None
-        self.state = None
+        self.action = action
     def draw(self,game_window):
         super().draw(game_window)
     def set_click_response(self,action):
-        self.action = action #a function
+        self.action = action #lambda
     def update(self,event):
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos): #mouse hovering
             self.show_img = self.hover_img
             if event.type == pygame.MOUSEBUTTONDOWN: #button clicked
-                self.show_img = self.normal_img #sleep to show clicked button?
+                self.show_img = self.normal_img
                 #print("click")
                 if self.action != None:
-                    self.action() #this is a lambda
+                    return self.action()
         else:
            self.show_img = self.normal_img 
            return None
@@ -105,7 +104,9 @@ class State(): #sub-classes for walking vs talking?
             x.draw(game_window)
     def update(self,event):
         for x in self.sprites:
-            x.update(event)
+            re = x.update(event)
+            if re != None:
+                return re
     def open_exit(self): #change to accomodate for direction
         self.exit = True #triggers an event, moves to next scene, more code to come
 
