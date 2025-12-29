@@ -18,7 +18,7 @@ class CustSprite():
         return self.rect.bottomright
     def draw(self,game_window):
         game_window.blit(self.show_img,(self.x,self.y))
-    def update(self):
+    def update(self,event):
         pass
 
 class Player(CustSprite):

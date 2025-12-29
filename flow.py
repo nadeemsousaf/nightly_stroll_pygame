@@ -22,8 +22,6 @@ else:
     file = open(mem_file, "x")
     file.close()
 
-player = Player(test,test,test) #temporary
-
 def shutdown_save():
     pygame.quit()
     file = open("NightlyStrollMem.txt", "w") #open memory file
@@ -53,7 +51,8 @@ while True: #game loop
         elif re in add_item_code:
             add_item_code[re]
         else: #change game state
-            load_state = re
+            load_state = state_dict[re]
+            #load_state = re
             load_state.update(event) 
     load_state.draw(window)
    
