@@ -32,7 +32,12 @@ def shutdown_save():
     exit() #exit program
 
 def restart_game():
-    pass
+    global load_state
+    global global_dict
+    load_state = menu_state1
+    global_dict = {"game_state":1, "item":"broad sword", "city":"New York"}
+
+add_item_code = {} #code with function
 
 while True: #game loop
     for event in pygame.event.get():
@@ -45,6 +50,8 @@ while True: #game loop
             shutdown_save()
         elif re == 'RESTART':
             restart_game()
+        elif re in add_item_code:
+            add_item_code[re]
         else: #change game state
             load_state = re
             load_state.update(event) 
