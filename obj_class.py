@@ -164,13 +164,18 @@ class StateWalk(State):
         self.sprites[0].walk() #player must always come first in list of sprites
 
     def update(self,event):
-        self.walk()
+        for x in self.sprites:
+            self.walk()
+            re = x.update(event)
+            if re != None:
+                return re
+        #self.walk()
         #if player.x is past certain threshold- next state? change image?
 
     def get_player(self):
         return self.sprites[0]
 
 class StateTalk(State):
-    def __init__(self,number,bg,mg,fg,events,sprites): #not needed?
-        super().__init__(self,number,bg,mg,fg,events,sprites) 
+    def test(self):
+        pass
 
