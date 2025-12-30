@@ -28,11 +28,14 @@ class CustSprite():
         pass
 
 class Player(CustSprite):
-    def __init__(self,x,y,front_img,left_img,right_img):
-        super().__init__(x,y,front_img)
-        self.front_img = front_img
-        self.left_img = left_img
-        self.right_img = right_img
+    def __init__(self,x,y,front_img1,front_img2,left_img1,left_img2,right_img1,right_img2):
+        super().__init__(x,y,front_img1)
+        self.front_img1 = front_img1
+        self.front_img2 = front_img2
+        self.left_img1 = left_img1
+        self.left_img2 = left_img2
+        self.right_img1 = right_img1
+        self.right_img2 = right_img2
         self.x_dir = 0
         self.y_dir = 0
         self.speed = 10
@@ -40,13 +43,22 @@ class Player(CustSprite):
         self.pause = False
     
     def set_forward(self):
-        self.show_img = self.front_img
+        if self.show_img == self.front_img1:
+            self.show_img = self.front_img2
+        else:
+            self.show_img = self.front_img1
 
     def set_left(self):
-        self.show_img = self.left_img
+        if self.show_img == self.left_img1:
+            self.show_img = self.left_img2
+        else:
+            self.show_img = self.left_img1
 
     def set_right(self):
-        self.show_img = self.right_img
+        if self.show_img == self.right_img1:
+            self.show_img = self.right_img2
+        else:
+            self.show_img = self.right_img1
     
     def set_x_dir(self,x):
         self.x_dir = x
@@ -134,7 +146,7 @@ class NodeT(): #for tree with no built-in reversal (storyline/map)
         self.f = f
 
 class State(): #sub-classes for walking vs talking?
-    def __init__(self,number,bg,mg,fg,events,sprites):
+    def __init__(self,number,events,sprites,bg,mg=None,fg=None):
         self.number = number
         self.bg = bg
         self.mg = mg
@@ -144,8 +156,10 @@ class State(): #sub-classes for walking vs talking?
 
     def draw(self,game_window):
         game_window.blit(self.bg,(0,0)) #update custom x & y
-        game_window.blit(self.mg,(0,0)) #update custom x & y
-        game_window.blit(self.fg,(0,0)) #update custom x & y
+        if self.mg != None:
+            game_window.blit(self.mg,(0,0)) #update custom x & y
+        if self.fg != None:
+            game_window.blit(self.fg,(0,0)) #update custom x & y
         for x in self.sprites:
             x.draw(game_window)
 
@@ -169,7 +183,6 @@ class StateWalk(State):
             re = x.update(event)
             if re != None:
                 return re
-        #self.walk()
         #if player.x is past certain threshold- next state? change image?
 
     def get_player(self):

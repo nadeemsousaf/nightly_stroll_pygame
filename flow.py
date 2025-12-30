@@ -37,7 +37,7 @@ def restart_game():
 
 add_item_code = {} #code with function
 
-player = Player(0,0,player1,player1,player1) #placeholder
+player = Player(0,0,my_guy1,my_guy2,my_guy5,my_guy3,my_guy6,my_guy4) #placeholder
 
 while True: #game loop
     if load_state is StateWalk:
