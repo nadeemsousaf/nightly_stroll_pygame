@@ -53,12 +53,8 @@ while True: #game loop
                 player.set_forward()
             elif event.key == pygame.K_LEFT:
                 player.set_x_dir(-1)
-                if player.x > window.get_size()[0]:
-                    player.x = window.get_size()[0] - 10
             elif event.key == pygame.K_RIGHT:
-                player.set_x_dir(1)
-                if player.x < 0:
-                    player.x = 10
+                player.set_x_dir(1) 
                 
             '''
             elif event.key == pygame.K_SPACE:
@@ -74,6 +70,12 @@ while True: #game loop
                 player.set_x_dir(0)
             elif event.key == pygame.K_RIGHT:
                 player.set_x_dir(0)
+
+        if isinstance(load_state,StateWalk): #working on screen out-of-bounds
+            if player.x < 0:
+                player.x = 50
+            if player.x > window.get_size()[0]:
+                player.x = window.get_size()[0]
         
         if event.type == pygame.VIDEORESIZE:
             for i in state_dict:
