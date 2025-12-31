@@ -37,15 +37,16 @@ def restart_game():
 
 add_item_code = {} #code with function
 
-player = Player(0,0,my_guy1,my_guy2,my_guy5,my_guy3,my_guy6,my_guy4) #placeholder
+player = Player(0,0,[my_guy1,my_guy2],[my_guy5,my_guy3],[my_guy6,my_guy4]) #placeholder
 
 while True: #game loop
-    if load_state is StateWalk:
-        player = load_state.get_player() #set player for movement
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             shutdown_save()
-        if event.type == pygame.KEYDOWN:
+
+        if event.type == pygame.KEYDOWN and isinstance(load_state,StateWalk):
+            player = load_state.get_player() #set player for movement
             if event.key == pygame.K_DOWN:
                 player.set_forward()
             elif event.key == pygame.K_UP:
@@ -60,7 +61,7 @@ while True: #game loop
             elif event.key == pygame.K_SPACE:
                 player.attack()
             '''
-        if event.type == pygame.KEYUP:
+        if event.type == pygame.KEYUP and isinstance(load_state,StateWalk):
             player = load_state.get_player() #set player for movement
             if event.key == pygame.K_DOWN:
                 player.set_y_dir(0)

@@ -5,17 +5,19 @@ from obj_class import *
 window_size = (800,500)
 
 start_button = Button(300,150,game_buttons_img[0],game_buttons_img[1],lambda:3)
-quit_button1 = Button(500,150,game_buttons_img[6],game_buttons_img[7],lambda:'QUIT')
-quit_button2 = Button(200,250,game_buttons_img[6],game_buttons_img[7],lambda:'QUIT')
+quit_button1 = Button(500,150,quit_b,quit_ba,lambda:'QUIT')
+quit_button2 = Button(200,250,quit_b,quit_ba,lambda:'QUIT')
 resume_button = Button(200,50,game_buttons_img[4],game_buttons_img[5])
 restart_button = Button(200,150,game_buttons_img[2],game_buttons_img[3],lambda:4)
 yes_restart_button = Button(200,200,game_buttons_img[2],game_buttons_img[3],lambda:'RESTART')
 test_button = Button(200,150,game_buttons_img[2],game_buttons_img[3],lambda:5)
 test_button2 = Button(200,150,game_buttons_img[2],game_buttons_img[3],lambda:3)
 
-user = Player(0,245,my_guy1,my_guy2,my_guy5,my_guy3,my_guy6,my_guy4)
+#quit_button3 = Button(700,250,quit_b,quit_ba,lambda:'QUIT')
 
-#quit_button2.set_click_response(lambda: 'QUIT')
+user = Player(0,245,[my_guy1,my_guy2],[my_guy5,my_guy3],[my_guy6,my_guy4])
+
+quit_button2.set_click_response(lambda: 'QUIT')
 #restart_button.set_click_response(lambda: 'RESTART')
 
 menu_state1 = State(1,[],[start_button,quit_button1],title_test)

@@ -25,14 +25,14 @@ class CustSprite():
 
 
 class Player(CustSprite):
-    def __init__(self,x,y,front_img1,front_img2,left_img1,left_img2,right_img1,right_img2):
-        super().__init__(x,y,front_img1)
-        self.front_img1 = front_img1
-        self.front_img2 = front_img2
-        self.left_img1 = left_img1
-        self.left_img2 = left_img2
-        self.right_img1 = right_img1
-        self.right_img2 = right_img2
+    def __init__(self,x,y,front_img,left_img,right_img):
+        super().__init__(x,y,front_img[0])
+        self.front_img1 = front_img[0]
+        self.front_img2 = front_img[1]
+        self.left_img1 = left_img[0]
+        self.left_img2 = left_img[1]
+        self.right_img1 = right_img[0]
+        self.right_img2 = right_img[1]
         self.x_dir = 0
         self.y_dir = 0
         self.speed = 10
