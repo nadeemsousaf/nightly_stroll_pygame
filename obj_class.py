@@ -38,6 +38,7 @@ class Player(CustSprite):
         self.speed = 10
         self.health = 200
         self.pause = False
+        self.img_counter = 0
     
     def set_forward(self):
         if self.show_img == self.front_img1:
@@ -63,8 +64,12 @@ class Player(CustSprite):
     def set_y_dir(self,y):
         self.x_dir = y
 
-    def walk(self):
+    def update(self,event): #should this just override the parent update()?
         if self.pause != True:
+            if self.x_dir > 0:
+                self.set_left()
+            elif self.x_dir < 0:
+                self.set_right()
             self.x += self.speed*self.x_dir
         
     def pause_player(self):
@@ -78,6 +83,7 @@ class Player(CustSprite):
             self.x = coord_tuple[0]
         if coord_tuple[1] != None:
             self.y = coord_tuple[1]
+        self.rect = pygame.Rect(self.x,self.y,self.normal_img.get_width(),self.normal_img.get_height())
 
     def resize_for_win(self,win_tuple):
         new_dim = resize_dim(self.show_img,win_tuple)
@@ -210,16 +216,6 @@ class StateWalk(State):
     def __init__(self,number,bg,mg,fg,events,sprites):
         super().__init__(self,number,bg,mg,fg,events,sprites)
     '''
-    def walk(self):
-        self.sprites[0].walk() #player must always come first in list of sprites
-
-    def update(self,event):
-        for x in self.sprites:
-            self.walk()
-            re = x.update(event)
-            if re != None:
-                return re
-        #if player.x is past certain threshold- next state? change image?
 
     def get_player(self):
         return self.sprites[0]

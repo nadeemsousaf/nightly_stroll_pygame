@@ -53,10 +53,13 @@ while True: #game loop
                 player.set_forward()
             elif event.key == pygame.K_LEFT:
                 player.set_x_dir(-1)
-                player.set_right()
+                if player.x > window.get_size()[0]:
+                    player.x = window.get_size()[0] - 10
             elif event.key == pygame.K_RIGHT:
                 player.set_x_dir(1)
-                player.set_left()
+                if player.x < 0:
+                    player.x = 10
+                
             '''
             elif event.key == pygame.K_SPACE:
                 player.attack()
