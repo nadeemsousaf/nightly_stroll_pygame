@@ -1,31 +1,27 @@
-import pygame
-from button_functions import *
+from obj_functions import *
 
 class CustSprite():
     def __init__(self,x,y,normal_img):
         self.x = x
         self.y = y
-        self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #height goes positive downward...?, width & height catered to normal state
+        #self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #height goes positive downward...?, width & height catered to normal state
         self.normal_img = normal_img
         self.show_img = normal_img
-
-    def get_top_left(self):
-        return self.rect.topleft
-    
-    def get_top_right(self):
-        return self.rect.topright
-    
-    def get_bottom_left(self):
-        return self.rect.bottomleft
-    
-    def get_bottom_right(self):
-        return self.rect.bottomright
+        self.normal_img
     
     def draw(self,game_window):
         game_window.blit(self.show_img,(self.x,self.y))
 
     def update(self,event):
         pass
+    
+    def resize_for_win(self,win_tuple):
+        self.normal_img = resize_for_win_logic(self.normal_img,win_tuple)
+        self.show_img = resize_for_win_logic(self.show_img,win_tuple)
+
+    def get_obj_rect(self):
+        return self.normal_img.get_rect()
+
 
 class Player(CustSprite):
     def __init__(self,x,y,front_img1,front_img2,left_img1,left_img2,right_img1,right_img2):
@@ -81,6 +77,16 @@ class Player(CustSprite):
             self.x = coord_tuple[0]
         if coord_tuple[1] != None:
             self.y = coord_tuple[1]
+
+    def resize_for_win(self,win_tuple):
+        self.normal_img = resize_for_win_logic(self.normal_img,win_tuple)
+        self.show_img = resize_for_win_logic(self.show_img,win_tuple)
+        self.front_img1 = resize_for_win_logic(self.front_img1,win_tuple)
+        self.front_img2 = resize_for_win_logic(self.front_img2,win_tuple)
+        self.left_img1 = resize_for_win_logic(self.left_img1,win_tuple)
+        self.left_img2 = resize_for_win_logic(self.left_img2,win_tuple)
+        self.right_img1 = resize_for_win_logic(self.right_img1,win_tuple)
+        self.right_img2 = resize_for_win_logic(self.right_img2,win_tuple)
         
 
 class NPC(CustSprite):
@@ -92,6 +98,14 @@ class NPC(CustSprite):
 
     def motion(self):
         pass
+
+    def resize_for_win(self,win_tuple):
+        self.normal_img = resize_for_win_logic(self.normal_img,win_tuple)
+        self.show_img = resize_for_win_logic(self.show_img,win_tuple)
+        self.front_img = resize_for_win_logic(self.front_img,win_tuple)
+        self.left_img = resize_for_win_logic(self.left_img,win_tuple)
+        self.right_img = resize_for_win_logic(self.right_img,win_tuple)
+
 
 class TextBubble(CustSprite): #separate text from text box? Or one image?
     def __init__(self,text,x,y,txt_x,txt_y,font,normal_img,colour):
@@ -118,7 +132,7 @@ class Button(CustSprite):
 
     def update(self,event):
         mouse_pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(mouse_pos): #mouse hovering
+        if self.get_obj_rect().collidepoint(mouse_pos): #mouse hovering
             self.show_img = self.hover_img
             if event.type == pygame.MOUSEBUTTONDOWN: #button clicked
                 self.show_img = self.normal_img
@@ -128,6 +142,12 @@ class Button(CustSprite):
         else:
            self.show_img = self.normal_img 
            return None
+    
+    def resize_for_win(self,win_tuple):
+        self.normal_img = resize_for_win_logic(self.normal_img,win_tuple)
+        self.show_img = resize_for_win_logic(self.show_img,win_tuple)
+        self.hover_img = resize_for_win_logic(self.hover_img,win_tuple)
+
 
 class NodeT(): #for tree with no built-in reversal (storyline/map)
     def __init__(self,data):
@@ -168,6 +188,15 @@ class State(): #sub-classes for walking vs talking?
             re = x.update(event)
             if re != None:
                 return re
+            
+    def resize_for_win(self,win_tuple):
+        self.bg = resize_for_win_logic(self.bg,win_tuple)
+        if self.mg != None:
+            self.mg = resize_for_win_logic(self.mg,win_tuple)
+        if self.fg != None:
+            self.fg = resize_for_win_logic(self.fg,win_tuple)
+        for x in self.sprites:
+            x.resize_for_win(win_tuple)
 
 class StateWalk(State):
     '''

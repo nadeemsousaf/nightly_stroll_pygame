@@ -6,7 +6,7 @@ from npc import *
 from tree import *
 
 pygame.init()
-window = pygame.display.set_mode((800,500), pygame.RESIZABLE)
+window = pygame.display.set_mode(window_size, pygame.RESIZABLE)
 pygame.display.set_caption('Nightly Stroll')
 clock = pygame.time.Clock()
 
@@ -47,10 +47,8 @@ while True: #game loop
             shutdown_save()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                #player.set_y_dir(1)
                 player.set_forward()
             elif event.key == pygame.K_UP:
-                #player.set_y_dir(-1)
                 player.set_forward()
             elif event.key == pygame.K_LEFT:
                 player.set_x_dir(-1)
@@ -72,6 +70,11 @@ while True: #game loop
                 player.set_x_dir(0)
             elif event.key == pygame.K_RIGHT:
                 player.set_x_dir(0)
+        
+        if event.type == pygame.VIDEORESIZE:
+            for i in state_dict:
+                state_dict[i].resize_for_win((window_size,window.get_size()))
+            window_size = window.get_size()
 
     re = load_state.update(event) #custom handling
     if re != None: #changing state
@@ -83,7 +86,6 @@ while True: #game loop
             add_item_code[re]
         else: #change game state
             load_state = state_dict[re]
-            #load_state = re
             load_state.update(event) 
     load_state.draw(window)
    
