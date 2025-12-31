@@ -2,12 +2,11 @@ from obj_functions import *
 
 class CustSprite():
     def __init__(self,x,y,normal_img):
-        self.x = x
-        self.y = y
-        #self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #height goes positive downward...?, width & height catered to normal state
+        self.x = x #necessary?
+        self.y = y #necessary?
+        self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #don't need rect accurate for each img, just overall representation
         self.normal_img = normal_img
         self.show_img = normal_img
-        self.normal_img
     
     def draw(self,game_window):
         game_window.blit(self.show_img,(self.x,self.y))
@@ -16,11 +15,13 @@ class CustSprite():
         pass
     
     def resize_for_win(self,win_tuple):
+        new_dim = resize_dim(self.show_img,win_tuple)
+        self.rect = pygame.Rect(self.x,self.y,new_dim[0],new_dim[1])
         self.normal_img = resize_for_win_logic(self.normal_img,win_tuple)
         self.show_img = resize_for_win_logic(self.show_img,win_tuple)
 
     def get_obj_rect(self):
-        return self.normal_img.get_rect()
+        return self.rect
 
 
 class Player(CustSprite):
@@ -79,6 +80,8 @@ class Player(CustSprite):
             self.y = coord_tuple[1]
 
     def resize_for_win(self,win_tuple):
+        new_dim = resize_dim(self.show_img,win_tuple)
+        self.rect = pygame.Rect(self.x,self.y,new_dim[0],new_dim[1])
         self.normal_img = resize_for_win_logic(self.normal_img,win_tuple)
         self.show_img = resize_for_win_logic(self.show_img,win_tuple)
         self.front_img1 = resize_for_win_logic(self.front_img1,win_tuple)
@@ -100,6 +103,8 @@ class NPC(CustSprite):
         pass
 
     def resize_for_win(self,win_tuple):
+        new_dim = resize_dim(self.show_img,win_tuple)
+        self.rect = pygame.Rect(self.x,self.y,new_dim[0],new_dim[1])
         self.normal_img = resize_for_win_logic(self.normal_img,win_tuple)
         self.show_img = resize_for_win_logic(self.show_img,win_tuple)
         self.front_img = resize_for_win_logic(self.front_img,win_tuple)
@@ -144,6 +149,8 @@ class Button(CustSprite):
            return None
     
     def resize_for_win(self,win_tuple):
+        new_dim = resize_dim(self.show_img,win_tuple)
+        self.rect = pygame.Rect(self.x,self.y,new_dim[0],new_dim[1])
         self.normal_img = resize_for_win_logic(self.normal_img,win_tuple)
         self.show_img = resize_for_win_logic(self.show_img,win_tuple)
         self.hover_img = resize_for_win_logic(self.hover_img,win_tuple)
