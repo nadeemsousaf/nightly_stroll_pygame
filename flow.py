@@ -71,9 +71,9 @@ while True: #game loop
             elif event.key == pygame.K_RIGHT:
                 player.set_x_dir(0)
 
-        if isinstance(load_state,StateWalk): #working on screen out-of-bounds
+        if isinstance(load_state,StateWalk): #working on screen out-of-bounds -> problem with image extra space around character
             if player.x < 0:
-                player.x = 50
+                player.x = 0
             if player.x > window.get_size()[0]:
                 player.x = window.get_size()[0]
         

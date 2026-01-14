@@ -1,5 +1,10 @@
 #pygame image loader- not yet using, images currently created in npc.py
+#pass all in structure thru convert alpha func after display made in flow.py?
 import pygame
+
+all_images = {} #use this
+
+
 
 game_buttons_img = [pygame.image.load('game_images/startBN.jpg'),pygame.image.load('game_images/startBA.jpg'),pygame.image.load('game_images/restartBN.jpg'),pygame.image.load('game_images/restartBA.jpg'),pygame.image.load('game_images/resumeBN.jpg'),pygame.image.load('game_images/resumeBA.jpg'),pygame.image.load('game_images/quitBN.jpg'),pygame.image.load('game_images/quitBA.jpg')]
 for i in range(len(game_buttons_img)):

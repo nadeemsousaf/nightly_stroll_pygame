@@ -2,6 +2,7 @@ Name: Nadeem Sousaf
 
 Developer notes:
 Working on next;
+- image creation (backgrounds, characters, items) -> important for visualization when testing *
 - screen bounds when walking
 - x and y adjustment of CustSprite upon window resizing
 - StateTalk vs State (same?)
