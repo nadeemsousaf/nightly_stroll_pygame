@@ -2,13 +2,15 @@ Name: Nadeem Sousaf
 
 Developer notes:
 Working on next;
-- image creation (backgrounds, characters, items) -> important for visualization when testing *
-- screen bounds when walking
+- creating spritesheet & backgrounds (priority 1)
+- adapt code to handle spritesheets
+- textbubble vs button vs item
+- screen bounds when walking -> differing based on background type
 - x and y adjustment of CustSprite upon window resizing
 - StateTalk vs State (same?)
-- cut scenes?
+- equipable items
 
-Program Description: 2D, RPG-style game made using Pygame
+Program Description: RPG-style game made using Pygame
 
 Execution Instructions: Type "python flow.py" into terminal, then follow instructions in the GUI (appears as a window) to play. Currently, if you wish to reset the game, you must delete "NightlyStrollMem.txt" from the working directory as the action would delete all saved game data (this will eventually be updated).
 

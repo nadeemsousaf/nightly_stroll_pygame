@@ -86,7 +86,7 @@ class Player(Critter):
         self.pause = False
 
 
-class NPC(CustSprite):
+class NPC(Critter):
     pass
 
 class Item(CustSprite):
