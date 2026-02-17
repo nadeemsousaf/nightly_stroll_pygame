@@ -1,5 +1,18 @@
 from obj_functions import *
 
+class TextBox():
+    def __init__(self,x,y,w,h,colour,text,font):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.colour = colour
+        self.text = text
+
+    def draw(self,game_window):
+        pygame.draw.rect(game_window, self.colour, pygame.Rect(self.x, self.y, self.w, self.h)) #test textbox
+        #text -> render text, text wrapping, user input
+        
 class CustSprite():
     def __init__(self,x,y,normal_img):
         self.x = x #necessary?
@@ -92,17 +105,7 @@ class NPC(Critter):
 class Item(CustSprite):
     pass
 
-class ItemEquip(Item):
-    pass
-
-class TextBubble(Item): #separate text from text box? Or one image?
-    pass
-
-    def draw(self,game_window):
-        super().draw(game_window)
-
-
-class Button(TextBubble):
+class Button(Item):
     def __init__(self,x,y,normal_img,hover_img,action=None): #only need 2 images for button
         super().__init__(x,y,normal_img)
         self.hover_img = hover_img
@@ -110,6 +113,9 @@ class Button(TextBubble):
 
     def set_click_response(self,action):
         self.action = action #lambda
+
+    def draw(self,game_window):
+        super().draw(game_window)
 
     def update(self,event):
         mouse_pos = pygame.mouse.get_pos()
@@ -123,6 +129,9 @@ class Button(TextBubble):
         else:
            self.show_img = self.normal_img 
            return None
+        
+class ItemEquip(Button):
+    pass
 
 
 class NodeT(): #for tree with no built-in reversal (storyline/map)
@@ -142,13 +151,14 @@ class NodeT(): #for tree with no built-in reversal (storyline/map)
         self.f = f
 
 class State(): #sub-classes for walking vs talking?
-    def __init__(self,number,events,sprites,bg,mg=None,fg=None):
+    def __init__(self,number,events,sprites,bg,mg=None,fg=None,textbox=None):
         self.number = number
         self.bg = bg
         self.mg = mg
         self.fg = fg
         self.events = events
         self.sprites = sprites
+        self.textbox = textbox
 
     def draw(self,game_window):
         game_window.blit(self.bg,(0,0)) #update custom x & y
@@ -156,6 +166,8 @@ class State(): #sub-classes for walking vs talking?
             game_window.blit(self.mg,(0,0)) #update custom x & y
         if self.fg != None:
             game_window.blit(self.fg,(0,0)) #update custom x & y
+        if self.textbox != None:
+            self.textbox.draw()
         for x in self.sprites:
             x.draw(game_window)
 
@@ -164,6 +176,14 @@ class State(): #sub-classes for walking vs talking?
             re = x.update(event)
             if re != None:
                 return re
+            
+    def add_text_box(self,textbox): #before drawn
+        self.textbox = textbox
+    
+    def hide_text_box(self): #while drawn
+        self.textbox = None
+        self.draw()
+
             
     '''
     def resize_for_win(self,win_tuple):

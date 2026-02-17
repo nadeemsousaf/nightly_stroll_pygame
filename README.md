@@ -2,12 +2,11 @@ Name: Nadeem Sousaf
 
 Developer notes:
 Working on next;
-- creating spritesheet & backgrounds (priority 1)
-- adapt code to handle spritesheets
-- textbubble vs button vs item
-- screen bounds when walking -> differing based on background type
-- x and y adjustment of CustSprite upon window resizing
-- StateTalk vs State (same?)
+- window textbox -> adjust to background size, text wrapping, user input
+- creating spritesheet & backgrounds -> adapt code to handle spritesheets
+- window resizing -> adjusting elements within window
+- different view perspectives
+- screen bounds when walking
 - equipable items
 
 Program Description: RPG-style game made using Pygame
