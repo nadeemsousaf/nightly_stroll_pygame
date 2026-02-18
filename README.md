@@ -2,8 +2,8 @@ Name: Nadeem Sousaf
 
 Developer notes:
 Working on next;
-- window textbox -> adjust to background size, text wrapping, user input
 - creating spritesheet & backgrounds -> adapt code to handle spritesheets
+- window textbox -> adjust to background size, text wrapping, user input
 - window resizing -> adjusting elements within window
 - different view perspectives
 - screen bounds when walking

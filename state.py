@@ -4,6 +4,9 @@ from obj_class import *
 
 window_size = (800,500)
 
+tree_item = Item(200,200,tree)
+
+'''
 start_button = Button(300,150,game_buttons_img[0],game_buttons_img[1],lambda:3)
 quit_button1 = Button(500,150,quit_b,quit_ba,lambda:'QUIT')
 quit_button2 = Button(200,250,quit_b,quit_ba,lambda:'QUIT')
@@ -23,10 +26,12 @@ quit_button2.set_click_response(lambda: 'QUIT')
 menu_state1 = State(1,[],[start_button,quit_button1],title_test)
 menu_state2 = State(2,[],[resume_button,restart_button,quit_button2],title_test)
 menu_state3 = State(2,[],[yes_restart_button],are_you_sure)
-s1 = StateWalk(3,[],[user,test_button],great_wave)
+s1 = StateWalk(3,[],[user,test_button,tree_item],great_wave)
 s2 = StateTalk(3,[],[test_button2],great_wave)
+'''
 
 #translation
+'''
 state_dict = {
     1:menu_state1,
     2:menu_state2,
@@ -34,3 +39,8 @@ state_dict = {
     4:menu_state3,
     5:s2
     }
+'''
+menu_state1 = State(1,[],[tree_item],great_wave)
+menu_state2 = menu_state1
+
+state_dict = {1:menu_state1,2:menu_state2}

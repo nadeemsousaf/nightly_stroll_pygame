@@ -1,9 +1,25 @@
-#pygame image loader- not yet using, images currently created in npc.py
-#pass all in structure thru convert alpha func after display made in flow.py?
+#will refactor all of this *
+
 import pygame
 
-all_images = {} #use this
+#COLOURS -------------------------------
+BLACK = (0,0,0)
+#COLOURS -------------------------------
 
+class SpriteSheet():
+    def __init__(self,path):
+        self.path = path
+        self.sheet = pygame.image.load(self.path) #.convert_alpha()
+    
+    def get_img(self,x,y,w,h,scale,colour):
+        image = pygame.Surface((w,h))
+        image.blit(self.sheet,(0,0),(x,y,w,h))
+        image = pygame.transform.scale(image, (w*scale,h*scale))
+        image.set_colorkey(colour)
+        return image
+
+spritesheet1 = SpriteSheet('game_images/spritesheet1.png')
+tree = spritesheet1.get_img(0,0,64,64,3,BLACK)
 
 
 game_buttons_img = [pygame.image.load('game_images/startBN.jpg'),pygame.image.load('game_images/startBA.jpg'),pygame.image.load('game_images/restartBN.jpg'),pygame.image.load('game_images/restartBA.jpg'),pygame.image.load('game_images/resumeBN.jpg'),pygame.image.load('game_images/resumeBA.jpg'),pygame.image.load('game_images/quitBN.jpg'),pygame.image.load('game_images/quitBA.jpg')]

@@ -17,7 +17,7 @@ class CustSprite():
     def __init__(self,x,y,normal_img):
         self.x = x #necessary?
         self.y = y #necessary?
-        self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #don't need rect accurate for each img, just overall representation
+        #self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #don't need rect accurate for each img, just overall representation
         self.normal_img = normal_img
         self.show_img = normal_img
     
