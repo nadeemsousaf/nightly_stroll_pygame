@@ -5,6 +5,7 @@ from obj_class import *
 window_size = (800,500)
 
 tree_item = Item(200,200,tree)
+grass_ground = Item(200,400,grass)
 
 '''
 start_button = Button(300,150,game_buttons_img[0],game_buttons_img[1],lambda:3)
@@ -40,7 +41,7 @@ state_dict = {
     5:s2
     }
 '''
-menu_state1 = State(1,[],[tree_item],great_wave)
+menu_state1 = State(1,[],[tree_item,grass_ground],great_wave)
 menu_state2 = menu_state1
 
 state_dict = {1:menu_state1,2:menu_state2}

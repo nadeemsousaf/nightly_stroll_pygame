@@ -3,6 +3,7 @@ Name: Nadeem Sousaf
 Developer notes:
 Working on next;
 - creating spritesheet & backgrounds -> adapt code to handle spritesheets
+- State child classes -> tiled state for walking, bg state for talk, bg state for walking
 - window textbox -> adjust to background size, text wrapping, user input
 - window resizing -> adjusting elements within window
 - different view perspectives
