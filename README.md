@@ -4,11 +4,28 @@ Developer notes:
 Working on next;
 - creating spritesheet & backgrounds -> adapt code to handle spritesheets
 - State child classes -> tiled state for walking, bg state for talk, bg state for walking
+- fix Button class to match new sprite creation solution
 - window textbox -> adjust to background size, text wrapping, user input
 - window resizing -> adjusting elements within window
 - different view perspectives
 - screen bounds when walking
 - equipable items
+- aesthetic transitions between different State types with different viewpoints (eye-level vs semi-aerial)
+
+Needed images;
+- 2 tree sprites for summer
+- 2 tree sprites for winter
+- grass sprite
+- stone sprite
+- snow sprites
+- all animations for player sprites
+- home bg
+- sword sprite
+- net sprite
+- telescope sprite
+- all button sprites for non-hover & hover
+- sky sprite
+- all animations for all npc sprites
 
 Program Description: RPG-style game made using Pygame
 
