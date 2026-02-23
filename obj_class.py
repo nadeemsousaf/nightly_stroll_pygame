@@ -163,43 +163,16 @@ class State(): #sub-classes for walking vs talking?
         self.sprites = sprites
         self.textbox = textbox
         self.gen_bg(*bg_settings)
+        self.player = None
+        for x in sprites:
+            if isinstance(x,Player):
+                self.player = x
+                break
 
     def set_bg(self,bg):
         self.bg = bg
-
-    def blit_tile(self,tile,coord,area_rect,game_window,sparse): #not using
-        game_window.blit(tile,coord) #eventually pass to tile draw function, no reason for this and class function to exist
-        if sparse: #randomly generate new coordinates
-            pass
-        else:
-            if (coord[1]+186) >= (area_rect.topleft[1]+area_rect.width):
-                return (coord[0]+186,area_rect.topleft[1])
-            else:
-                return (coord[0],coord[1]+186)
         
-    def fill_area(self,game_window,tile_type,area_rect,total_percent=False): #not using
-        multi = False
-        sparse = False
-        cur_xy = area_rect.topleft
-        if total_percent: #sparse tile placement, total_percent is percentage of tiles that should be places out of total area of area_rect
-            sparse = True
-            num_tile = int(((((area_rect.width*area_rect.height)/192)/100)*total_percent).floor())
-        else:
-            num_tile = int((area_rect.width*area_rect.height)/192) #otherwise place # of tiles that is equal to total area of area_rect
-        if isinstance(tile_type,dict): #multiple tile types
-            multi = True
-            tiles = [*tile_type]
-            percent = list(tile_type.values())
-            all_tile = random.choice(tiles,p=percent,size=num_tile)
-        i = 0
-        while i < num_tile:
-            if multi:
-                cur_xy = self.blit_tile(all_tile[i],cur_xy,area_rect,game_window,sparse)
-            else: #one tile type
-                cur_xy = self.blit_tile(tile_type,cur_xy,area_rect,game_window,sparse)
-            i += 1
-    
-    def gen_bg(self,tile_type,area_rect,total_percent=False):
+    def gen_bg(self,tile_type,area_rect,total_percent=False): #hard coded values for tile size ***
         temp_bg = []
         multi = False
         sparse = False
@@ -235,11 +208,10 @@ class State(): #sub-classes for walking vs talking?
     def draw(self,game_window):
         for x in self.bg:
             x.draw(game_window)
-        #self.fill_area(game_window,*self.bg_settings)
         for x in self.sprites:
             x.draw(game_window)
 
-    def update(self,event):
+    def update(self,event): #doesn't update bg ***
         for x in self.sprites:
             re = x.update(event)
             if re != None:
@@ -254,6 +226,9 @@ class State(): #sub-classes for walking vs talking?
 
     def get_ID(self):
         return self.ID
+    
+    def get_player(self):
+        return self.player
             
     '''
     def resize_for_win(self,win_tuple):
@@ -271,9 +246,6 @@ class StateWalk(State):
     def __init__(self,number,bg,mg,fg,events,sprites):
         super().__init__(self,number,bg,mg,fg,events,sprites)
     '''
-
-    def get_player(self):
-        return self.sprites[0]
 
 class StateTalk(State):
     def test(self):
