@@ -21,7 +21,9 @@ class SpriteSheet():
 spritesheet1 = SpriteSheet('game_images/spritesheet1.png')
 tree = spritesheet1.get_img(0,0,64,64,3,BLACK)
 grass = spritesheet1.get_img(64,0,64,64,3,BLACK)
-
+grass_fl = spritesheet1.get_img(64,64,64,64,3,BLACK)
+#grass = pygame.transform.scale(grass,(67,67))
+#print(grass.get_height())
 
 game_buttons_img = [pygame.image.load('game_images/startBN.jpg'),pygame.image.load('game_images/startBA.jpg'),pygame.image.load('game_images/restartBN.jpg'),pygame.image.load('game_images/restartBA.jpg'),pygame.image.load('game_images/resumeBN.jpg'),pygame.image.load('game_images/resumeBA.jpg'),pygame.image.load('game_images/quitBN.jpg'),pygame.image.load('game_images/quitBA.jpg')]
 for i in range(len(game_buttons_img)):

@@ -5,8 +5,6 @@ from obj_class import *
 window_size = (800,500)
 
 tree_item = Item(200,150,tree)
-grass_ground = Item(200,200,grass)
-grass_ground1 = Item(200,264,grass)
 '''
 start_button = Button(300,150,game_buttons_img[0],game_buttons_img[1],lambda:3)
 quit_button1 = Button(500,150,quit_b,quit_ba,lambda:'QUIT')
@@ -44,7 +42,8 @@ state_dict = {
 
 #fill_area(self,tile_type,area_rect,total_percent=None)
 
-menu_state1 = State(1,[],[grass_ground,grass_ground1,tree_item],{"tile_type":grass,"area_rect":pygame.Rect(0,0,800,500),"total_percent":None})
-menu_state2 = menu_state1
+#menu_state1 = State(1,[tree_item],[grass,pygame.Rect(0,0,800,500)])
+menu_state1 = State(1,[tree_item],[{grass:0.6,grass_fl:0.4},pygame.Rect(0,0,800,500)])
+menu_state2 = menu_state1 #temporary measure
 
-state_dict = {1:menu_state1,2:menu_state2}
+state_dict = {menu_state1.get_ID():menu_state1,menu_state2.get_ID():menu_state2}

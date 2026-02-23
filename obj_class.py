@@ -153,51 +153,46 @@ class NodeT(): #for tree with no built-in reversal (storyline/map)
         self.f = f
 
 class State(): #sub-classes for walking vs talking?
-    def __init__(self,number,events,sprites,bg_settings,textbox=None):
-        self.number = number
+    def __init__(self,ID,sprites,bg_settings,textbox=None):
+        self.ID = ID
         self.bg_settings = bg_settings
-        self.events = events
         self.sprites = sprites
         self.textbox = textbox
 
-    def blit_tile(self,tile,coord,area_rect,game_window):
-        game_window.blit(tile,coord)
-        if (coord[1]+64) > (area_rect.topleft[1]>area_rect.width):
-            return (coord[0]+64,area_rect.topleft[1])
+    def blit_tile(self,tile,coord,area_rect,game_window,sparse):
+        game_window.blit(tile,coord) #eventually pass to tile draw function, no reason for this and class function to exist
+        if sparse: #randomly generate new coordinates
+            pass
         else:
-            return (coord[0],coord[1]+64)
+            if (coord[1]+186) >= (area_rect.topleft[1]+area_rect.width):
+                return (coord[0]+186,area_rect.topleft[1])
+            else:
+                return (coord[0],coord[1]+186)
         
-    def fill_area(self,game_window,tile_type,area_rect,total_percent=None): #tile type can be single tile object OR dictionary with tileID keys and float percents values for random gen
+    def fill_area(self,game_window,tile_type,area_rect,total_percent=False): #tile type can be single tile object OR dictionary with tileID keys and float percents values for random gen
         multi = False
+        sparse = False
         cur_xy = area_rect.topleft
         if total_percent: #sparse tile placement, total_percent is percentage of tiles that should be places out of total area of area_rect
-            num_tile = ((((area_rect.width*area_rect.height)/64)/100)*total_percent).floor()
+            sparse = True
+            num_tile = int(((((area_rect.width*area_rect.height)/192)/100)*total_percent).floor())
         else:
-            num_tile = (area_rect.width*area_rect.height)/64 #otherwise place # of tiles that is equal to total area of area_rect
+            num_tile = int((area_rect.width*area_rect.height)/192) #otherwise place # of tiles that is equal to total area of area_rect
         if isinstance(tile_type,dict): #multiple tile types
             multi = True
             tiles = [*tile_type]
-            percent = tile_type.values()
-            all_tile = random.choice[tiles,percent,num_tile]
+            percent = list(tile_type.values())
+            all_tile = random.choice(tiles,p=percent,size=num_tile)
         i = 0
         while i < num_tile:
             if multi:
-                cur_xy = self.blit_tile(all_tile[i],cur_xy,area_rect,game_window)
+                cur_xy = self.blit_tile(all_tile[i],cur_xy,area_rect,game_window,sparse)
             else: #one tile type
-                cur_xy = self.blit_tile(tile_type,cur_xy,area_rect,game_window)
+                cur_xy = self.blit_tile(tile_type,cur_xy,area_rect,game_window,sparse)
             i += 1
 
     def draw(self,game_window):
-        '''
-        game_window.blit(self.bg,(0,0)) #update custom x & y
-        if self.mg != None:
-            game_window.blit(self.mg,(0,0)) #update custom x & y
-        if self.fg != None:
-            game_window.blit(self.fg,(0,0)) #update custom x & y
-        if self.textbox != None:
-            self.textbox.draw()
-        '''
-        self.fill_area(game_window,self.bg_settings["tile_type"],self.bg_settings["area_rect"],self.bg_settings["total_percent"])
+        self.fill_area(game_window,*self.bg_settings)
         for x in self.sprites:
             x.draw(game_window)
 
@@ -214,6 +209,8 @@ class State(): #sub-classes for walking vs talking?
         self.textbox = None
         self.draw()
 
+    def get_ID(self):
+        return self.ID
             
     '''
     def resize_for_win(self,win_tuple):

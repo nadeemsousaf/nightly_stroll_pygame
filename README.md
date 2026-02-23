@@ -3,14 +3,14 @@ Name: Nadeem Sousaf
 Developer notes:
 Working on next;
 - creating spritesheet & backgrounds -> adapt code to handle spritesheets
-- State child classes -> tiled state for walking, bg state for talk, bg state for walking
+- State child classes -> walking vs talking
 - fix Button class to match new sprite creation solution
 - window textbox -> adjust to background size, text wrapping, user input
 - window resizing -> adjusting elements within window
 - different view perspectives
 - screen bounds when walking
 - equipable items
-- aesthetic transitions between different State types with different viewpoints (eye-level vs semi-aerial)
+- aesthetic transitions between different States
 
 Needed images;
 - 2 tree sprites for summer
