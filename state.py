@@ -44,7 +44,7 @@ state_dict = {
 #fill_area(self,tile_type,area_rect,total_percent=None)
 
 #menu_state1 = State(1,[tree_item],[grass,pygame.Rect(0,0,800,500)])
-menu_state1 = StateWalk(1,[tree_item,user],[{grass:0.6,grass_fl:0.4},pygame.Rect(0,0,800,500)])
+menu_state1 = StateWalk(1,[user],{'grass_tiles':[{grass:0.6,grass_fl:0.4},pygame.Rect(0,0,800,500)],'trees':[tree,pygame.Rect(0,0,800,500),30]})
 menu_state2 = menu_state1 #temporary measure
 
 state_dict = {menu_state1.get_ID():menu_state1,menu_state2.get_ID():menu_state2}

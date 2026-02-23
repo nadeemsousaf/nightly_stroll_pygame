@@ -2,13 +2,11 @@ Name: Nadeem Sousaf
 
 Developer notes:
 Working on next;
-- creating spritesheet & backgrounds -> adapt code to handle spritesheets
 - State child classes -> walking vs talking
 - fix Button class to match new sprite creation solution
 - window textbox -> adjust to background size, text wrapping, user input
 - window resizing -> adjusting elements within window
 - different view perspectives
-- screen bounds when walking
 - equipable items
 - aesthetic transitions between different States
 

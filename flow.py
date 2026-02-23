@@ -71,18 +71,19 @@ while True: #game loop
             elif event.key == pygame.K_RIGHT:
                 player.set_x_dir(0)
 
-        if isinstance(load_state,StateWalk): #working on screen out-of-bounds -> problem with image extra space around character
+        if isinstance(load_state,StateWalk): #working on screen out-of-bounds -> image extra space around character?
+            #print(f'player: {player.x}| window:{window.get_size()[0]}')
             if player.x < 0:
                 player.x = 0
             if player.x > window.get_size()[0]:
-                player.x = window.get_size()[0]
+                player.x = window.get_size()[0] - player.get_obj_rect().width
                 
-        '''
         if event.type == pygame.VIDEORESIZE:
+            '''
             for i in state_dict:
                 state_dict[i].resize_for_win((window_size,window.get_size()))
+            '''
             window_size = window.get_size()
-        '''
 
     re = load_state.update(event) #custom handling
     if re != None: #changing state

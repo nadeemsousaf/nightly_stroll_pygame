@@ -19,7 +19,7 @@ class CustSprite():
     def __init__(self,x,y,normal_img):
         self.x = x #necessary?
         self.y = y #necessary?
-        #self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #don't need rect accurate for each img, just overall representation
+        self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #don't need rect accurate for each img, just overall representation
         self.normal_img = normal_img
         self.show_img = normal_img
     
@@ -162,7 +162,8 @@ class State(): #sub-classes for walking vs talking?
         self.bg_settings = bg_settings
         self.sprites = sprites
         self.textbox = textbox
-        self.gen_bg(*bg_settings)
+        self.bg = []
+        self.gen_bg()
         self.player = None
         for x in sprites:
             if isinstance(x,Player):
@@ -170,9 +171,16 @@ class State(): #sub-classes for walking vs talking?
                 break
 
     def set_bg(self,bg):
-        self.bg = bg
+        self.bg = self.bg + bg
+
+    def reset_bg(self): #necessary?
+        self.bg = []
+
+    def gen_bg(self):
+        for key in self.bg_settings:
+            self.gen_bg_layer(*self.bg_settings[key])
         
-    def gen_bg(self,tile_type,area_rect,total_percent=False): #hard coded values for tile size ***
+    def gen_bg_layer(self,tile_type,area_rect,total_percent=False): #hard coded values for tile size ***
         temp_bg = []
         multi = False
         sparse = False
@@ -180,7 +188,7 @@ class State(): #sub-classes for walking vs talking?
         all_tile = None
         if total_percent: #sparse tile placement, total_percent is percentage of tiles that should be places out of total area of area_rect
             sparse = True
-            num_tile = int(((((area_rect.width*area_rect.height)/192)/100)*total_percent).floor())
+            num_tile = int(round((((area_rect.width*area_rect.height)/192)/100)*total_percent))
         else:
             num_tile = int((area_rect.width*area_rect.height)/192) #otherwise place # of tiles that is equal to total area of area_rect
         if isinstance(tile_type,dict): #multiple tile types
@@ -195,8 +203,8 @@ class State(): #sub-classes for walking vs talking?
             else: #one tile type
                 temp_bg.append(Item(cur_xy[0],cur_xy[1],tile_type))
                 
-            if sparse: #determine next coordinates
-                pass
+            if sparse: #determine next coordinates *** determine how to handle tile size before writing
+                cur_xy = (random.randint(area_rect.width),random.randint(area_rect.height))
             else:
                 if (cur_xy[1]+186) >= (area_rect.topleft[1]+area_rect.width):
                     cur_xy = cur_xy[0]+186,area_rect.topleft[1]
