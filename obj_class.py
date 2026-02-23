@@ -38,6 +38,10 @@ class CustSprite():
     def get_obj_rect(self):
         return self.rect
     
+    def set_xy(self,coord):
+        self.x = coord[0]
+        self.y = coord[1]
+    
 class Critter(CustSprite):
     def __init__(self,x,y,front_img,left_img,right_img):
         super().__init__(x,y,front_img[0])
@@ -158,8 +162,12 @@ class State(): #sub-classes for walking vs talking?
         self.bg_settings = bg_settings
         self.sprites = sprites
         self.textbox = textbox
+        self.gen_bg(*bg_settings)
 
-    def blit_tile(self,tile,coord,area_rect,game_window,sparse):
+    def set_bg(self,bg):
+        self.bg = bg
+
+    def blit_tile(self,tile,coord,area_rect,game_window,sparse): #not using
         game_window.blit(tile,coord) #eventually pass to tile draw function, no reason for this and class function to exist
         if sparse: #randomly generate new coordinates
             pass
@@ -169,7 +177,7 @@ class State(): #sub-classes for walking vs talking?
             else:
                 return (coord[0],coord[1]+186)
         
-    def fill_area(self,game_window,tile_type,area_rect,total_percent=False): #tile type can be single tile object OR dictionary with tileID keys and float percents values for random gen
+    def fill_area(self,game_window,tile_type,area_rect,total_percent=False): #not using
         multi = False
         sparse = False
         cur_xy = area_rect.topleft
@@ -190,9 +198,44 @@ class State(): #sub-classes for walking vs talking?
             else: #one tile type
                 cur_xy = self.blit_tile(tile_type,cur_xy,area_rect,game_window,sparse)
             i += 1
+    
+    def gen_bg(self,tile_type,area_rect,total_percent=False):
+        temp_bg = []
+        multi = False
+        sparse = False
+        cur_xy = area_rect.topleft
+        all_tile = None
+        if total_percent: #sparse tile placement, total_percent is percentage of tiles that should be places out of total area of area_rect
+            sparse = True
+            num_tile = int(((((area_rect.width*area_rect.height)/192)/100)*total_percent).floor())
+        else:
+            num_tile = int((area_rect.width*area_rect.height)/192) #otherwise place # of tiles that is equal to total area of area_rect
+        if isinstance(tile_type,dict): #multiple tile types
+            multi = True
+            tiles = [*tile_type]
+            percent = list(tile_type.values())
+            all_tile = random.choice(tiles,p=percent,size=num_tile)
+        i = 0
+        while i < num_tile:
+            if multi:
+                temp_bg.append(Item(cur_xy[0],cur_xy[1],all_tile[i]))
+            else: #one tile type
+                temp_bg.append(Item(cur_xy[0],cur_xy[1],tile_type))
+                
+            if sparse: #determine next coordinates
+                pass
+            else:
+                if (cur_xy[1]+186) >= (area_rect.topleft[1]+area_rect.width):
+                    cur_xy = cur_xy[0]+186,area_rect.topleft[1]
+                else:
+                    cur_xy = cur_xy[0],cur_xy[1]+186
+            i += 1
+        self.set_bg(temp_bg)
 
     def draw(self,game_window):
-        self.fill_area(game_window,*self.bg_settings)
+        for x in self.bg:
+            x.draw(game_window)
+        #self.fill_area(game_window,*self.bg_settings)
         for x in self.sprites:
             x.draw(game_window)
 
