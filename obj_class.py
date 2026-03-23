@@ -19,7 +19,7 @@ class CustSprite():
     def __init__(self,x,y,normal_img):
         self.x = x #necessary?
         self.y = y #necessary?
-        self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #don't need rect accurate for each img, just overall representation
+        self.rect = pygame.Rect(x,y,normal_img.get_width(),normal_img.get_height()) #not really using atm
         self.normal_img = normal_img
         self.show_img = normal_img
     
@@ -41,6 +41,7 @@ class CustSprite():
     def set_xy(self,coord):
         self.x = coord[0]
         self.y = coord[1]
+        self.rect = pygame.Rect(self.x,self.y,self.normal_img.get_width(),self.normal_img.get_height())
     
 class Critter(CustSprite):
     def __init__(self,x,y,front_img,left_img,right_img):
@@ -238,16 +239,11 @@ class State(): #sub-classes for walking vs talking?
     def get_player(self):
         return self.player
             
-    '''
-    def resize_for_win(self,win_tuple):
-        self.bg = resize_for_win_logic(self.bg,win_tuple)
-        if self.mg != None:
-            self.mg = resize_for_win_logic(self.mg,win_tuple)
-        if self.fg != None:
-            self.fg = resize_for_win_logic(self.fg,win_tuple)
-        for x in self.sprites:
-            x.resize_for_win(win_tuple)
-    '''
+    def adjust_for_win(self,new_rect): #not done ***
+        for key in self.bg_settings:
+            self.bg_settings[key][1] = new_rect #doesn't account for custom area that is smaller than the area of the window -> adjusts all areas to window size
+        self.gen_bg()
+
 
 class StateWalk(State):
     '''

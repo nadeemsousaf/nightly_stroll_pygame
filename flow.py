@@ -78,12 +78,17 @@ while True: #game loop
             if player.x > window.get_size()[0]:
                 player.x = window.get_size()[0] - player.get_obj_rect().width
                 
-        if event.type == pygame.VIDEORESIZE:
-            '''
-            for i in state_dict:
-                state_dict[i].resize_for_win((window_size,window.get_size()))
-            '''
-            window_size = window.get_size()
+        
+        if event.type == pygame.VIDEORESIZE: #adjust to change x & y coords of sprites inside window, resize width & height?
+            #pass
+            load_state.adjust_for_win(window.get_rect())
+            #load_state.adjust_for_win(window_size,window.get_size())
+            #window_size = window.get_size()
+            #load_state.draw(window)
+            #load_state.gen_bg()
+            #print(window.get_rect())
+            
+        
 
     re = load_state.update(event) #custom handling
     if re != None: #changing state

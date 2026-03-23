@@ -6,7 +6,6 @@ Working on next;
 - fix Button class to match new sprite creation solution
 - window textbox -> adjust to background size, text wrapping, user input
 - window resizing -> adjusting elements within window
-- different view perspectives
 - equipable items
 - aesthetic transitions between different States
 
